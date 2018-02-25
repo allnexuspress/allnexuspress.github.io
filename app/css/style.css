@@ -1,0 +1,29 @@
+body {
+  color: white;
+  height: 100%;
+  width: 100%;
+  background: -webkit-gradient(linear, left bottom, left top, from(yellow), to(red));
+  background: linear-gradient(to top, yellow, red);
+  font-family: "Heebo", sans-serif;
+}
+
+article {
+  height: 6200px;
+}
+
+.responsive {
+  max-width: 400px;
+  height: auto;
+}
+
+/*#courtney-per-01 {
+	background-image: url('assets/Courtney_Per_1.jpg');
+}*/
+#search {
+  width: 200px;
+  border: solid black 1px;
+  padding: 2px;
+  font-size: 0.8rem;
+}
+
+/*# sourceMappingURL=style.css.map */
