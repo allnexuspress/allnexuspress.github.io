@@ -1,3 +1,4 @@
+@import 'normalize';
 @import 'fonts';
 
 body {
@@ -18,7 +19,7 @@ article {
 }
 
 /*#courtney-per-01 {
-	background-image: url('assets/Courtney_Per_1.jpg');
+	background-image: url('./images/Courtney_Per_1.jpg');
 }*/
 
 #search {
