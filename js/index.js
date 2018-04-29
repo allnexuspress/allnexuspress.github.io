@@ -2,6 +2,13 @@ const build = (() => {
 	const DB = 'https://nexus-catalog.firebaseio.com/posts.json?auth=7g7pyKKykN3N5ewrImhOaS6vwrFsc5fKkrk8ejzf';
 	const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
+	// 0 = artist, 1 = title
+	let sortKey = 0;
+	let entries = {
+		byAuthor: [],
+		byTitle: []
+	};
+
 	let articleTemplate = `
 		<article class="article__outer">
 			<div class="article__inner">
@@ -31,7 +38,8 @@ const build = (() => {
 	};
 
 	const renderEntries = (entries) => {
-		let $articleList = document.querySelector('.article-list');
+		console.log('rendering entries. sortKey is: ', sortKey, 'entries are: ', entries);
+		let $articleList = document.getElementById('js-list');
 
 		entries.forEach(entry => {
 			let { title, lastName, firstName, images } = entry;
@@ -53,32 +61,47 @@ const build = (() => {
 			$first.innerHTML = firstName;
 			$last.innerHTML = lastName;
 
-		})
-	}
+		});
+	};
+
+	const sortByTitle = (data) => {
+		console.log('entries before sort: ', data);
+		data.sort((a, b) => 
+			b.title[0].toUpperCase() - a.title[0].toUpperCase()
+		);
+
+		entries.byTitle = data;
+		console.log('entries after sort: ', entries.byTitle)
+	};
 
 	const fetchData = () => {
 			fetch(DB).then(res =>
 				res.json()
-			).then(entries => {
-				renderEntries(entries);
+			).then(data => {
+				sortByTitle(data);
+				entries.byAuthor = data; 
+				renderEntries(entries.byAuthor);
 			});
 	};
 
 
-	let state = {'scrollPosition': 0};
+	const addSortButtonListeners = () => {
+		let $author = document.getElementById('js-author');
+		let $title = document.getElementById('js-title');
 
-	const toggleTitle = () => {
-		console.log('toggling title');
-		let $elem = document.getElementById('js-list');
-		let position = $elem.getBoundingClientRect();
-		console.log('position.top: ', position.top)
-		if (position.top > 200) console.log('it changed', position.top);
-	};
+		$author.addEventListener('click', () => {
+			if (sortKey) {
+				sortKey = 0;
+				renderEntries(entries.byAuthor);
+			}
+		});
 
-	const makeScrollListener = () => {
-		console.log("making listener");
-			window.addEventListener('scroll', function() {
-				console.log('scrolling')
+		$title.addEventListener('click', () => {
+			if (!sortKey) {
+				sortKey = 1;
+				console.log('in title. sortKey is: ', sortKey);
+				renderEntries(entries.byTitle);
+			}
 		});
 	};
 
@@ -123,10 +146,10 @@ const build = (() => {
 	};
 
 	const init = () => {
+		fetchData();
 		makeAlphabet();
 		addMobileControlButton();
-		makeScrollListener();
-		fetchData();
+		addSortButtonListeners();
 	}
 
 	init();
