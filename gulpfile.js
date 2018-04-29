@@ -1,5 +1,6 @@
 const gulp = require('gulp');
 const sass = require('gulp-sass');
+const babel = require('gulp-babel');
 const autoprefixer = require('gulp-autoprefixer');
 const sourcemaps = require('gulp-sourcemaps');
 const browserSync = require('browser-sync').create();
@@ -17,6 +18,14 @@ gulp.task('build', () => {
 			stream: true
 		}));
 });
+
+gulp.task('build-js', () => 
+	gulp.src('js/index.js')
+		.pipe(babel({
+			presets: ['env']
+		}))
+		.pipe(gulp.dest('dist'))
+);
 
 gulp.task('browserSync', () => {
 	browserSync.init({

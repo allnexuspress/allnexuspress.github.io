@@ -1,30 +1,295 @@
 @import 'normalize';
 @import 'fonts';
 
-body {
-	color: white;
+$breakpoint-xs: 375px;
+$breakpoint-sm: 545px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+
+html {
 	height: 100%;
-	width: 100%;
-	background: linear-gradient(to top, yellow, red);
-	font-family: $font-stack;
+	overflow: hidden;
 }
 
-article {
-	height: 6200px;
+body {
+	box-sizing: border-box;
+	font-family: $font-stack; 
+	height: 100%;
+	overflow: auto;
 }
 
-.responsive {
-	max-width: 400px;
-	height: auto;
+main {
+/*	max-width: 850px;*/
+	margin: 0 auto;
 }
 
-/*#courtney-per-01 {
-	background-image: url('./images/Courtney_Per_1.jpg');
-}*/
-
-#search {
- 	width: 200px;
-  border: solid black 1px;
-  padding: 2px;
-  font-size: 0.8rem;
+img {
+	max-width: 600px;
+	max-height: 400px;
+	margin: 0 20px 20px 0;
 }
+
+button {
+	padding: 6px;
+	text-decoration: underline;
+	background: none;
+	border: none;
+
+	&:hover {
+		cursor: pointer;
+		text-decoration: none;
+	}
+}
+
+h1 {
+	margin: 0;
+	font-size: 2rem;
+	font-weight: 800px;
+}
+
+h2 {
+	margin: 0;
+	line-height: 2rem;
+}
+
+.mobile-controls__outer {
+	display: none;
+}
+
+.global-nav {
+	&__outer {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		background-color: white;
+		position: fixed;
+		z-index: 5;
+	}
+
+	&__inner {
+		padding: 20px 50px 10px;
+	}
+
+	&__primary-nav {
+		display: flex;
+		align-items: center;
+		padding-bottom: 10px;
+		white-space: nowrap;
+	}
+
+	&__browse-by {
+		display: flex;
+		align-items: center;
+		padding-right: 30px;
+	}
+
+	&__alphabet {
+		display: flex;
+		align-items: center;
+	}
+}
+
+.browse-by {
+	&__title {
+		padding-right: 10px;
+	}
+}
+
+.search {
+	&__title {
+		padding-right: 10px;
+	}
+
+	&__input {
+		width: 200px;
+		height: 24px;
+		border: 1px solid black;
+	}
+}
+
+.alphabet {
+	&__title {
+		padding-right: 10px;
+		white-space: nowrap;
+	}
+}
+
+.global-header {
+	&__inner {
+		padding: 0 30px;
+	}
+
+	&__title {
+		font-size: 3rem;
+		padding-right: 20px;
+
+		&-outer {
+			transform: translateY(120px);
+			padding: 0 50px;
+			position: fixed;
+		}
+
+		&-inner {
+			display: flex;
+			align-items: baseline;
+		}
+	}
+
+	&__subtitle {
+		font-size: 1rem;
+		font-weight: normal;
+	}
+}
+
+.article-list {
+	display: flex;
+	flex-direction: column;
+	transform: translateY(190px);
+	padding: 10px 0;
+	background: white;
+}
+
+.article {
+	&__outer {
+		background: linear-gradient(to bottom, white, darkgray);
+		padding: 0 50px;
+		margin-bottom: 100px;
+	}
+
+	&__heading {
+		display: flex;
+		flex-direction: column;
+		align-items: baseline;
+		padding-bottom: 20px;
+	}
+
+	&__images {
+		&-inner {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+		}
+	}
+}
+
+.article-heading {
+	&__title {
+		padding-right: 20px;
+		font-weight: 300;
+		line-height: 2.5rem;
+	}
+
+	&__name {
+		font-size: 0.85rem;
+		font-weight: 500;
+	}
+}
+
+@media screen and (max-width: $breakpoint-sm) {
+	.mobile-controls {
+		&__outer {
+			display: flex;
+			padding: 10px 20px 5px;
+			position: fixed;
+			z-index: 10;
+			right: 0;
+			left: 0;
+			background-color: white;
+		}
+
+		&__inner {
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			background-color: white;
+			font-size: 0.9rem;
+		}
+	}
+
+	.fas {
+		font-size: 1.5rem;
+		transition: transform 0.5s ease-out;
+	}
+
+	.global-nav {
+		&__outer {
+			margin-top: 40px;
+			transition: visibility 2s;
+			transition: height 2s;
+		}
+
+		&__inner {
+			padding: 20px 20px 0;
+			background-color: white;
+			font-size: 0.85rem;
+		}
+
+		&__primary-nav {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		&__browse-by {
+			padding-bottom: 10px;
+		}
+	}
+
+	.global-header__title-outer {
+		display: none;
+	}
+
+	.article {
+		&__outer {
+			padding: 0 20px;
+			margin-bottom: 40px;
+		}
+
+		&-list {
+			transform: translateY(65px);
+			img {
+				max-width: 390px;
+				margin: 0 0 20px;
+			}
+		}
+
+		&__images-inner {
+			justify-content: center;
+		}
+	}
+}
+
+@media screen and (max-width: $breakpoint-xs) {
+		h2 {
+			font-size: 1.25rem;
+		}
+
+		button {
+			padding: 6px 7px;
+		}
+
+		.article-list {
+			padding-top: 5px;
+		}
+}
+
+@media screen and (min-width: $breakpoint-md) {
+
+}
+
+@media screen and (min-width: $breakpoint-lg) {
+
+}
+
+.u-hide {
+	display: none;
+	height: 0;
+}
+
+.u-show {
+	display: block;
+	height: 176px;
+}
+
+
+
