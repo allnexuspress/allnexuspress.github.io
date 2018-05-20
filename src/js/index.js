@@ -1,3 +1,12 @@
+import nav from './navigation';
+
+const test = () => {
+	console.log('nav: ', nav);
+	nav()
+};
+
+test();
+
 const build = (() => {
 	const DB = 'https://nexus-catalog.firebaseio.com/posts.json?auth=7g7pyKKykN3N5ewrImhOaS6vwrFsc5fKkrk8ejzf';
 	const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
@@ -81,9 +90,10 @@ const build = (() => {
 				sortByTitle(data);
 				entries.byAuthor = data; 
 				renderEntries(entries.byAuthor);
-			});
+			}).then(() => {
+				// setBackground();
+			}).catch(err => console.warn(err));
 	};
-
 
 	const addSortButtonListeners = () => {
 		let $author = document.getElementById('js-author');
@@ -131,6 +141,16 @@ const build = (() => {
 		let $button = document.getElementById('js-mobile-nav');
 		$button.addEventListener('click', toggleMobileNav);
 	}
+
+	// const setBackground = () => {
+	// 	let articles = document.querySelectorAll('.article__outer');
+	// 	console.log('articles: ', articles);
+
+	// 	Array.from(articles).forEach((a, i) => {
+	// 		let direction = (i % 2 !== 0) ? 'bottom' : 'top';
+	// 		a.style.background = `linear-gradient(to ${direction}, red, yellow)`;
+ // 		});
+	// };
 
 	const makeAlphabet = () => {
 		let $outer = document.querySelector('.alphabet__letters-inner');

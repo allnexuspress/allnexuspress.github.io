@@ -1,44 +1,56 @@
-const gulp = require('gulp');
-const sass = require('gulp-sass');
-const babel = require('gulp-babel');
-const autoprefixer = require('gulp-autoprefixer');
-const sourcemaps = require('gulp-sourcemaps');
-const browserSync = require('browser-sync').create();
+const browserify = require('browserify'),
+			gulp = require('gulp'),
+			sourcemaps = require('gulp-sourcemaps'),
+			sass = require('gulp-sass'),
+			autoprefixer = require('gulp-autoprefixer'),
+			source = require('vinyl-source-stream'),
+			buffer = require('vinyl-buffer'),
+			broswerSync = require('browser-sync');
 
-gulp.task('build', () => {
-	return gulp
-		.src('scss/**/*.scss')
-		.pipe(sourcemaps.init())
-		.pipe(sass({ outputStyle: 'expanded' })
-			.on('error', sass.logError))
-		.pipe(autoprefixer({ browsers: ['last 2 versions'] }))
-		.pipe(sourcemaps.write('./'))
-		.pipe(gulp.dest('css'))
-		.pipe(browserSync.reload({
-			stream: true
-		}));
+const entryPoint = './src/js/index.js',
+			browserDir = './',
+			sassWatchPath = './src/**/*.scss',
+			jsWatchPath = './src/**/*.js',
+			htmlWatchPath = './**/*.html';
+
+gulp.task('js', () => {
+	return browserify(entryPoint, { debug: true, extenstions: ['es6'] })
+		.transform('babelify', { presets: ['es2015'] })
+		.bundle()
+		.pipe(source('bundle.js'))
+		.pipe(buffer())
+		.pipe(sourcemaps.init({ loadMaps: true }))
+		.pipe(sourcemaps.write())
+		.pipe(gulp.dest('./dist'))
+		.pipe(broswerSync.reload({ stream: true }));
 });
 
-gulp.task('build-js', () => 
-	gulp.src('js/index.js')
-		.pipe(babel({
-			presets: ['env']
-		}))
-		.pipe(gulp.dest('dist'))
-);
+gulp.task('browser-sync', () => {
+	const config = {
+		server: { baseDire: browserDir }
+	};
+	return broswerSync(config);
+});
 
-gulp.task('browserSync', () => {
-	browserSync.init({
-		server: {
-			baseDir: './'
-		},
+gulp.task('sass', () => {
+	return gulp.src(sassWatchPath)
+		.pipe(sourcemaps.init())
+		.pipe(sass().on('error', sass.logError))
+		.pipe(autoprefixer({
+			browsers: ['last 2 versions']
+		}))
+		.pipe(sourcemaps.write())
+		.pipe(gulp.dest('./dist'))
+		.pipe(broswerSync.reload({ stream: true }));
+});
+
+gulp.task('watch', () => {
+	gulp.watch(jsWatchPath, ['js']);
+	gulp.watch(sassWatchPath, ['sass']);
+	gulp.watch(htmlWatchPath, () => {
+		return gulp.src('')
+			.pipe(broswerSync.reload({ stream: true }))
 	});
 });
 
-gulp.task('watch', ['browserSync', 'build'], () => {
-	gulp.watch('scss/**/*.scss', ['build']);
-	gulp.watch('*.html', browserSync.reload);
-	gulp.watch('js/**/*/js', browserSync.reload);
-});
-
-gulp.task('default', ['watch', 'browserSync', 'build']);
+gulp.task('run', ['js', 'sass', 'watch', 'browser-sync']);

@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 		<title>Nexus Press</title>
-		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="dist/scss/style.css">
 		<link href="https://fonts.googleapis.com/css?family=Heebo:100,300,400,500" rel="stylesheet">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
 	</head>
@@ -19,14 +19,15 @@
 					</button>
 				</div>
 			</div>
+			<div class="parallax">
 			<nav class="global-nav__outer" id="js-nav">
 				<div class="global-nav__inner">
 					<div class="global-nav__primary-nav">
 						<div class="global-nav__browse-by">
 							<span class="browse-by__title">Browse by </span>
-							<button class="browse-by__by-author" id="js-author">Artist</button>
+							<button class="browse-by__by-author">Artist</button>
 							<span class="browse-by__divider"> | </span>
-							<button class="browse-by__by-title js-by-title" id="js-title">Title</button>
+							<button class="browse-by__by-title js-by-title">Title</button>
 						</div>
 						<div class="global-nav__search">
 							<span class="search__title">Search</span>
@@ -48,9 +49,6 @@
 			</div>
 			<div class="article-list" id="js-list"></div>
 		</main>
-		<script id="__bs_script__">
-    	document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.23.6'><\/script>".replace("HOST", location.hostname));
-	</script>
-	<script src="js/index.js"></script>
+	<script src="dist/bundle.js"></script>
 	</body>
 </html>
