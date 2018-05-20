@@ -13,20 +13,17 @@ html {
 body {
 	box-sizing: border-box;
 	font-family: $font-stack; 
-	height: 100%;
-	overflow: auto;
-}
-
-main {
-/*	max-width: 850px;*/
-	margin: 0 auto;
-	background-color: yellow;
+	overflow: hidden;
 }
 
 img {
 	max-width: 600px;
 	max-height: 400px;
 	margin: 0 20px 20px 0;
+}
+
+a {
+	color: black;
 }
 
 button {
@@ -43,8 +40,7 @@ button {
 
 h1 {
 	margin: 0;
-	font-size: 2rem;
-	font-weight: 800px;
+	font-size: 2.5rem;
 }
 
 h2 {
@@ -52,8 +48,43 @@ h2 {
 	line-height: 2rem;
 }
 
+.parallax {
+	perspective: 1px;
+	height: 100vh;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.parallax__layer {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+
+	&--base {
+		transform: translateZ(0);
+		transform: translateY(120px);
+	}
+
+	&--deep {
+		transform: translateZ(-2px) scale(3);
+	}
+
+	&--back {
+		transform: translateZ(-1px) scale(2);
+		height: calc(100vh * 23);
+		background: linear-gradient(chartreuse, aqua);
+	}
+}
+
+
 .mobile-controls__outer {
 	display: none;
+}
+
+.title {
+	padding-left: 50px;
 }
 
 .global-nav {
@@ -61,12 +92,7 @@ h2 {
 		width: 100%;
 		display: flex;
 		flex-direction: column;
-		position: fixed;
-		z-index: 5;
-	}
-
-	&__inner {
-		padding: 20px 50px 10px;
+		margin-bottom: 20px;
 	}
 
 	&__primary-nav {
@@ -111,27 +137,26 @@ h2 {
 		padding-right: 10px;
 		white-space: nowrap;
 	}
+
+	&__letter-anchor {
+		padding-right: 10px;
+
+	&:hover {
+		cursor: pointer;
+		text-decoration: none;
+	}
+}
 }
 
 .global-header {
+	z-index: 5;
+	padding: 20px 50px 10px;
+	position: fixed;
+	opacity: 1;
+	transition: opacity 1s ease-out;
+
 	&__inner {
 		padding: 0 30px;
-	}
-
-	&__title {
-		font-size: 3rem;
-		padding-right: 20px;
-
-		&-outer {
-			transform: translateY(120px);
-			padding: 0 50px;
-			position: fixed;
-		}
-
-		&-inner {
-			display: flex;
-			align-items: baseline;
-		}
 	}
 
 	&__subtitle {
@@ -144,8 +169,8 @@ h2 {
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	transform: translateY(190px);
 	padding: 10px 0;
+	margin-bottom: 200px;
 }
 
 .article {
@@ -191,7 +216,6 @@ h2 {
 			z-index: 10;
 			right: 0;
 			left: 0;
-			background-color: white;
 		}
 
 		&__inner {
@@ -199,7 +223,6 @@ h2 {
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			background-color: white;
 			font-size: 0.9rem;
 		}
 	}
@@ -207,33 +230,6 @@ h2 {
 	.fas {
 		font-size: 1.5rem;
 		transition: transform 0.5s ease-out;
-	}
-
-	.global-nav {
-		&__outer {
-			margin-top: 40px;
-			transition: visibility 2s;
-			transition: height 2s;
-		}
-
-		&__inner {
-			padding: 20px 20px 0;
-			background-color: white;
-			font-size: 0.85rem;
-		}
-
-		&__primary-nav {
-			flex-direction: column;
-			align-items: flex-start;
-		}
-
-		&__browse-by {
-			padding-bottom: 10px;
-		}
-	}
-
-	.global-header__title-outer {
-		display: none;
 	}
 
 	.article {
@@ -267,6 +263,10 @@ h2 {
 
 		.article-list {
 			padding-top: 5px;
+		}
+
+		.parallax__layer--base {
+			height: calc(100vh * 21);
 		}
 }
 

@@ -10,45 +10,19 @@
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
 	</head>
 	<body>
-		<main>
-			<div class="mobile-controls__outer">
-				<div class="mobile-controls__inner">
-					<h1 class="mobile-controls__title">Nexus Press</h1>
-					<button class="mobile-controls__menu-open-outer" id="js-mobile-nav">
-						<i class="mobile-controls__menu-open fas fa-angle-down" id="js-angle-icon"></i>
-					</button>
+		<div class="mobile-controls__outer" id="js-nav-mobile">
+		</div>
+			<nav class="global-header" id="js-nav"></nav>
+		<div class="parallax">
+			<div class="parallax__layer parallax__layer--back">
+			</div>
+			<div class="parallax__layer parallax__layer--base">
+				<h1 class="title" id="js-title">Nexus Press</h1>
+				<div class="article-list" id="js-list">
 				</div>
 			</div>
-			<div class="parallax">
-			<nav class="global-nav__outer" id="js-nav">
-				<div class="global-nav__inner">
-					<div class="global-nav__primary-nav">
-						<div class="global-nav__browse-by">
-							<span class="browse-by__title">Browse by </span>
-							<button class="browse-by__by-author">Artist</button>
-							<span class="browse-by__divider"> | </span>
-							<button class="browse-by__by-title js-by-title">Title</button>
-						</div>
-						<div class="global-nav__search">
-							<span class="search__title">Search</span>
-							<input class="search__input"></input>
-						</div>
-					</div>
-					<div class="global-nav__alphabet">
-						<span class="alphabet__title">Browse to </span>
-						<div class="alphabet__letters-outer">
-							<span class="alphabet__letters-inner"></span>
-						</div>
-					</div>
-				</div>
-			</nav>
-			<div class="global-header__title-outer">
-				<div class="global-header__title-inner">
-					<h1 class="global-header__title" id="js-title">Nexus Press</h1>
-				</div>
-			</div>
-			<div class="article-list" id="js-list"></div>
-		</main>
+			
+		</div>
 	<script src="dist/bundle.js"></script>
 	</body>
 </html>
