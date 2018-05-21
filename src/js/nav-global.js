@@ -8,6 +8,9 @@ const template =
 					<span class="browse-by__divider"> | </span>
 					<button class="browse-by__by-title" id="js-by-title">Title</button>
 				</div>
+				<a class="global-nav__home js-home" href="#home">
+					<span><i class="fas fa-angle-up"></i></span>
+				</a>
 				<div class="global-nav__search">
 					<span class="search__title">Search</span>
 					<input class="search__input"></input>

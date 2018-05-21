@@ -5,6 +5,7 @@ $breakpoint-xs: 375px;
 $breakpoint-sm: 545px;
 $breakpoint-md: 768px;
 $breakpoint-lg: 1024px;
+$breakpoint-xl: 1200px;
 
 html {
 	height: 100%;
@@ -17,7 +18,7 @@ body {
 }
 
 img {
-	max-width: 600px;
+	max-width: 400px;
 	max-height: 400px;
 	margin: 0 20px 20px 0;
 }
@@ -84,7 +85,12 @@ h2 {
 }
 
 .title {
-	padding-left: 50px;
+	padding-left: 100px;
+	font-weight: lighter;
+
+	&:hover {
+		cursor: pointer;
+	}
 }
 
 .global-nav {
@@ -102,10 +108,20 @@ h2 {
 		white-space: nowrap;
 	}
 
+	&__home {
+		padding-right: 50px;
+		text-decoration: underline;
+	}
+
+	&__home:hover {
+		text-decoration: none;
+		cursor: pointer;
+	}
+
 	&__browse-by {
 		display: flex;
 		align-items: center;
-		padding-right: 30px;
+		padding-right: 5px;
 	}
 
 	&__alphabet {
@@ -116,25 +132,26 @@ h2 {
 
 .browse-by {
 	&__title {
-		padding-right: 10px;
+		padding-right: 1px;
 	}
 }
 
 .search {
 	&__title {
-		padding-right: 10px;
+		padding-right: 6px;
 	}
 
 	&__input {
 		width: 200px;
 		height: 24px;
 		border: 1px solid black;
+		opacity: 0.5;
 	}
 }
 
 .alphabet {
 	&__title {
-		padding-right: 10px;
+		padding-right: 9px;
 		white-space: nowrap;
 	}
 
@@ -175,14 +192,14 @@ h2 {
 
 .article {
 	&__outer {
-		padding: 50px;
+		padding: 50px 0;
 	}
 
 	&__heading {
 		display: flex;
 		flex-direction: column;
 		align-items: baseline;
-		padding-bottom: 20px;
+		padding: 0 0 20px 100px;
 	}
 
 	&__images {
@@ -194,15 +211,19 @@ h2 {
 	}
 }
 
+.article__images-inner::-webkit-scrollbar {
+	display: none;
+}
+
 .article-heading {
 	&__title {
 		padding-right: 20px;
 		font-weight: 300;
-		line-height: 2rem;
+		margin-bottom: 5px;
 	}
 
 	&__name {
-		font-size: 0.85rem;
+		font-size: 1em;
 		font-weight: 500;
 	}
 }
@@ -250,6 +271,10 @@ h2 {
 			justify-content: center;
 		}
 	}
+
+	.article__images-inner:last-child {
+		padding-right: 400px;
+	}
 }
 
 @media screen and (max-width: $breakpoint-xs) {
@@ -271,11 +296,22 @@ h2 {
 }
 
 @media screen and (min-width: $breakpoint-md) {
-
+	.article__images-inner {
+		padding-left: 100px;
+		flex-wrap: nowrap;
+		overflow-x: auto;
+	}
 }
 
 @media screen and (min-width: $breakpoint-lg) {
 
+}
+
+@media screen and (min-width: $breakpoint-xl) {
+	img {
+		max-width: 460px;
+		max-height: 460px;
+	}
 }
 
 .u-hide {

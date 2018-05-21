@@ -18,12 +18,12 @@ let articleTemplate = `
 	<article class="article__outer">
 		<div class="article__inner">
 			<div class="article__heading">
-				<a class="js-entry-title">
-					<h2 class="article-heading__title"></h2>
-				</a>
+				<a class="js-entry-title"></a>
+				<h2 class="article-heading__title"></h2>
 				<div class="article-heading__name">
 					<span class="article-heading__name--first"></span>
-					<a class="article-heading__name--last js-entry-artist"></a>
+					<a class="js-entry-artist"></a>
+					<span class="article-heading__name--last"></span>
 				</div>
 			</div>
 			<div class="article__images-outer">
@@ -121,7 +121,7 @@ const setHeaderListeners = () => {
 
 	$header.addEventListener('mouseout', () => {
 		let titleY = $title.getBoundingClientRect().top;
-		
+
 		if (titleY < 120) {
 			if (headerIsVisible) {
 				headerIsVisible = false;
@@ -159,7 +159,7 @@ const findFirstEntry = (char) => {
 	clearAnchors(prevSelector);
 
 	return $entries.find(entry => {
-		let node = !sortKey ? entry : entry.firstElementChild;
+		let node = entry.nextElementSibling;
 		return node.innerHTML[0] === char || node.innerHTML[0] === char.toUpperCase();
 	});
 };
@@ -172,6 +172,7 @@ const setAlphabetAnchors = () => {
 
 		if (firstEntry) {
 			activeEntries[char] = 1;
+			// firstEntry.top = 200;
 			firstEntry.setAttribute('name', char);
 		}
 	});
@@ -215,6 +216,12 @@ const renderEntries = () => {
 		$title.innerHTML = title;
 		$first.innerHTML = firstName;
 		$last.innerHTML = lastName;
+
+		let imageList = Array.from(document.querySelectorAll('.article__images-inner'));
+		imageList.forEach(image => {
+		let lastChild = image.lastElementChild;
+		if (lastChild) lastChild.style.paddingRight = '200px';
+	});
 
 	});
 
