@@ -12,8 +12,7 @@ const articleTemplate = `
 			</div>	
 			<div class="article__images-outer">
 				<div class="article__images-inner"></div>
-				<p class="js-description"></p>
-			</div>
+				<p class="js-article-anchor-target"></p>
 		</div>
 	</article>
 `;

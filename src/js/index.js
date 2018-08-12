@@ -5,9 +5,10 @@ import articleTemplate from './article-template';
 const DB = 'https://nexus-catalog.firebaseio.com/posts.json?auth=7g7pyKKykN3N5ewrImhOaS6vwrFsc5fKkrk8ejzf';
 const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'v', 'w', 'z'];
 
+const $nav = document.getElementById('js-nav');
+const $find = document.getElementById('js-find');
 const $parallax = document.querySelector('.parallax');
 const $content = document.querySelector('.content');
-const $nav = document.getElementById('js-nav');
 const $title = document.getElementById('js-title');
 const $arrow = document.querySelector('.arrow');
 
@@ -29,7 +30,7 @@ const attachArrowListeners = () => {
 	});
 
 	$parallax.addEventListener('scroll', () => {
-		
+
 		let y = $title.getBoundingClientRect().y;
 		if (current !== y) {
 			prev = current;
@@ -49,21 +50,24 @@ const attachArrowListeners = () => {
 };
 
 const addSortButtonListeners = () => {
-	let $artist = document.getElementById('js-by-artist');
-	let $title = document.getElementById('js-by-title');
-
-	$artist.addEventListener('click', () => {
+	let $byArtist = document.getElementById('js-by-artist');
+	let $byTitle = document.getElementById('js-by-title');
+	$byArtist.addEventListener('click', () => {
 		scrollToTop();
 		if (sortKey) {
 			sortKey = 0;
+			$byArtist.classList.add('active');
+			$byTitle.classList.remove('active');
 			renderEntries();
 		}
 	});
 
-	$title.addEventListener('click', () => {
+	$byTitle.addEventListener('click', () => {
 		scrollToTop();
 		if (!sortKey) {
 			sortKey = 1;
+			$byTitle.classList.add('active');
+			$byArtist.classList.remove('active');
 			renderEntries();
 		}
 	});
@@ -108,7 +112,7 @@ const makeAlphabet = () => {
 			$anchor.classList.add('u-active');
 			$anchor.addEventListener('click', () => {
 				const letterNode = document.getElementById(letter);
-				const target = letter === 'a' ? document.getElementById('anchor-target') : letterNode.parentElement.parentElement.parentElement.parentElement.previousElementSibling.querySelector('.js-description');
+				const target = letter === 'a' ? document.getElementById('anchor-target') : letterNode.parentElement.parentElement.parentElement.parentElement.previousElementSibling.querySelector('.js-article-anchor-target');
 				console.log('target: ', target);
 				target.scrollIntoView({behavior: "smooth", block: "start"});
 			})
@@ -166,7 +170,7 @@ const renderEntries = () => {
 	$articleList.innerHTML = '';
 
 	entriesList.forEach(entry => {
-		let { title, lastName, firstName, description, images } = entry;
+		let { title, lastName, firstName, images, description, detail } = entry;
 
 		$articleList.insertAdjacentHTML('beforeend', articleTemplate);
 
@@ -175,11 +179,18 @@ const renderEntries = () => {
 
 		if (images.length) renderImages(images, $images);
 		
+		let $descriptionOuter = document.createElement('div');
 		let $descriptionNode = document.createElement('p');
-		$descriptionNode.classList.add('.js-description', 'article-description');
-		$descriptionNode.innerHTML = description;
+		let $detailNode = document.createElement('p');
+		$descriptionOuter.classList.add('article-description__outer');
+		$descriptionNode.classList.add('article-description');
+		$detailNode.classList.add('article-detail');
 
-		$images.append($descriptionNode);
+		$descriptionNode.innerHTML = description;
+		$detailNode.innerHTML = detail;
+
+		$descriptionOuter.append($descriptionNode, $detailNode);
+		$images.append($descriptionOuter);
 
 		let $titleNodes = document.querySelectorAll('.article-heading__title');
 		let $title = $titleNodes[$titleNodes.length - 1];
