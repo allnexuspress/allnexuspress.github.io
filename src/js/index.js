@@ -1,4 +1,3 @@
-// import mobileNav from './nav-mobile';
 import navLg from './nav-lg';
 import articleTemplate from './article-template';
 
@@ -6,15 +5,28 @@ const DB = 'https://nexus-catalog.firebaseio.com/posts.json?auth=7g7pyKKykN3N5ew
 const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'v', 'w', 'z'];
 
 const $nav = document.getElementById('js-nav');
-const $find = document.getElementById('js-find');
 const $parallax = document.querySelector('.parallax');
 const $content = document.querySelector('.content');
 const $title = document.getElementById('js-title');
 const $arrow = document.querySelector('.arrow');
+const $modal = document.querySelector('.modal');
 
 let sortKey = 0; // 0 = artist, 1 = title
 let entries = { byAuthor: [], byTitle: [] };
 let activeEntries = {};
+
+let modal = false;
+const attachModalListeners = () => {
+	const $find = document.getElementById('js-find');
+	
+	$find.addEventListener('click', () => {
+		$modal.classList.add('show');
+	});
+
+	$modal.addEventListener('click', () => {
+		$modal.classList.remove('show');
+	})
+}
 
 const scrollToTop = () => {
 	let thing = document.getElementById('anchor-target');
@@ -72,32 +84,6 @@ const addSortButtonListeners = () => {
 		}
 	});
 };
-
-// let isShowing = false;
-// const toggleMobileNav = () => {
-// 	let $icon = document.getElementById('js-angle-icon');
-// 	let $list = document.getElementById('js-list');
-
-// 	if (!isShowing) {
-// 			$nav.classList.add('u-show');
-// 			$icon.setAttribute('style', 'transform: rotate(180deg');
-// 			$list.setAttribute('style', 'transform: translateY(210px)');
-
-// 			isShowing = true;
-// 	} else {
-// 		$nav.classList.remove('u-show');
-// 		$nav.classList.add('u-hide')
-// 		$icon.setAttribute('style', 'transform: rotate(0deg');
-// 		$list.setAttribute('style', 'transform: translateY(65px)');
-
-// 		isShowing = false;
-// 	}
-// };
-
-// const addMobileControlButton = () => {
-// 	let $button = document.getElementById('js-mobile-nav');
-// 	$button.addEventListener('click', toggleMobileNav);
-// };
 
 const makeAlphabet = () => {
 	let $outer = document.querySelector('.alphabet__letters');
@@ -240,12 +226,11 @@ const fetchData = () => {
 
 const init = () => {
 	fetchData();
-	// mobileNav();
 	navLg();
 	makeAlphabet();
 	addSortButtonListeners();
 	attachArrowListeners();
-	// addMobileControlButton();
+	attachModalListeners();
 }
 
 init();
