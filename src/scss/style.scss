@@ -362,9 +362,96 @@ button {
 }
 
 @media only screen and (max-device-width: $breakpoint-md) {
-	.article-description__outer {
-		padding-right: 29.5%;
+	h1 {
+		font-size: 3.5em;
 	}
+
+	.article-description__outer {
+		padding-right: 54.6%;
+	}
+
+	.content {
+		padding-right: 50px;
+	}
+
+	.find {
+		display: none;
+	}
+
+	.nav--lg {
+		font-size: 1.25em;
+
+		.nav__alphabet {
+
+			.alphabet {
+				&__title {
+					margin-right: 12px;
+				}
+
+				&__letter-anchor {
+					margin-right: 10px;
+				}
+
+			}
+		}
+	}
+
+	.nav {
+		&__sort-by {
+			margin-bottom: 12px;
+		}
+	}
+
+	.title {
+		transform: translateY(120px);
+	}
+
+	.about {
+		font-size: 1.25em;
+		margin: 85px 0;
+		padding-left: 50px;
+	}
+
+	.article {
+		&__heading {
+			padding-left: 50px;
+		}
+
+		&__images {
+			&-inner {
+				padding-left: 50px;
+
+				img {
+					max-height: 400px;
+				}
+			}
+		}
+
+		&-heading {
+			&__title {
+				font-size: 1.7em;
+			}
+
+			&__name {
+				font-size: 1.25em;
+			}
+		}
+
+		&-description {
+			font-size: 1.2em;
+		}
+
+		&-detail {
+			font-size: 1em;
+		}
+	}
+
+	.arrow {
+		font-size: 3.8em;
+		padding-right: 35px;
+		transform: translateY(-95px);
+	}
+
 }
 
 @media only screen and (max-device-width: $breakpoint-sm) {
@@ -377,7 +464,7 @@ button {
 	}
 
 	.nav--lg {
-		font-size: 2em;
+		font-size: 2.2em;
 	
 		.nav__alphabet {
 			justify-content: space-around;
@@ -407,52 +494,53 @@ button {
 		}
 	}
 
-	.find {
-		display: none;
-	}
-
 	.title {
 		transform: translateY(210px);
 	}
 
-	.content {
-		padding-right: 50px;
-	}
-
 	.about {
 		font-size: 2.2em;
-		margin: 250px 0 150px;
+		margin: 250px 0 100px;
 		padding-left: 50px;
 	}
 
 	.article-description__outer {
-		padding-right: 54%;
+		padding-right: 37.5%;
 	}
 
 	.article {
 		&__outer {
-			padding: 40px 0 95px 0;
-		}
-
-		&-heading {
-
-			&__title {
-				font-size: 2.8em;
-				margin-right: 40px;
-				max-width: 650px;
-			}
-
-			&__name {
-				font-size: 1.7em;
-			}
+			padding: 110px 0 80px 0;
 		}
 
 		&__heading {
-			padding-left: 50px;
+			flex-direction: column;
+			margin-bottom: 20px;
+		}
+
+		&-heading {
+			&__title {
+				font-size: 2.8em;
+				margin: 0 0 20px 0;
+				max-width: inherit;
+			}
+
+			&__name {
+				font-size: 2.2em;
+			}
+		}
+
+		&-description {
+			font-size: 2em;
+			min-width: 550px;
+
+			&__outer {
+				padding-left: 50px;
+			}
 		}
 
 		&-detail {
-			font-size: 1.7em;
+			font-size: 1.8em;
 		}
 
 		&__images {
@@ -463,10 +551,6 @@ button {
 					max-height: 700px;
 				}
 			}
-		}
-
-		&-description {
-			font-size: 2em;
 		}
 	}
 
