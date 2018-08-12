@@ -2,28 +2,24 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 		<title>Nexus Press</title>
 		<link rel="stylesheet" href="dist/scss/style.css">
 		<link href="https://fonts.googleapis.com/css?family=Heebo:100,300,400,500" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
 	</head>
 	<body>
-		<div class="mobile-controls__outer" id="js-nav-mobile">
-		</div>
-			<nav class="global-header" id="js-nav"></nav>
+		<nav class="nav--lg" id="js-nav"></nav>
 		<div class="parallax">
-			<div class="parallax__layer parallax__layer--back">
+			<div class="parallax__layer parallax__layer--back"></div>
+			<div id="anchor-target"></div>
+			<div class="title" id="js-title">
+				<h1>Nexus Press</h1>
 			</div>
-			<div class="parallax__layer parallax__layer--base" id="home">
-				<div class="title" id="js-title">
-					<h1>Nexus Press</h1>
-				</div>
-				<div class="article-list" id="js-list">
-				</div>
+			<div class="parallax__layer parallax__layer--base content" id="home">
+				<p class="about">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				<li class="article-list" id="js-list"></li>
 			</div>
-			
 		</div>
 	<script src="dist/bundle.js"></script>
 	</body>

@@ -1,8 +1,13 @@
 import mobileNav from './nav-mobile';
-import globalNav from './nav-global';
+import navLg from './nav-lg';
 
 const DB = 'https://nexus-catalog.firebaseio.com/posts.json?auth=7g7pyKKykN3N5ewrImhOaS6vwrFsc5fKkrk8ejzf';
-const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'v', 'w', 'z'];
+
+const $parallax = document.querySelector('.parallax');
+const $content = document.querySelector('.content');
+const $nav = document.getElementById('js-nav');
+const $title = document.getElementById('js-title');
 
 // 0 = artist, 1 = title
 let sortKey = 0;
@@ -11,7 +16,6 @@ let entries = {
 	byTitle: []
 };
 let activeEntries = {};
-let currScroll = 0;
 let headerIsVisible = true;
 
 let articleTemplate = `
@@ -26,8 +30,10 @@ let articleTemplate = `
 					<span class="article-heading__name--last"></span>
 				</div>
 			</div>
+				
 			<div class="article__images-outer">
 				<div class="article__images-inner"></div>
+				<p class="js-description"></p>
 			</div>
 		</div>
 	</article>
@@ -61,7 +67,6 @@ const addSortButtonListeners = () => {
 
 let isShowing = false;
 const toggleMobileNav = () => {
-	let $nav = document.getElementById('js-nav');
 	let $icon = document.getElementById('js-angle-icon');
 	let $list = document.getElementById('js-list');
 
@@ -86,53 +91,8 @@ const addMobileControlButton = () => {
 	$button.addEventListener('click', toggleMobileNav);
 };
 
-const setHeaderListeners = () => {
-	let $parallax = document.querySelector('.parallax');
-	let $title = document.getElementById('js-title');
-	let $header = document.getElementById('js-nav');
-
-	$parallax.addEventListener('scroll', () => {
-		let titleY = $title.getBoundingClientRect().top;
-
-		if (titleY <= 115) {
-			if (headerIsVisible) {
-				headerIsVisible = false;
-				$header.style.opacity = 0.2;
-			}
-		}
-		if (titleY >= 110) {
-			if (!headerIsVisible) {
-				headerIsVisible = true;
-				$header.style.opacity = 1;
-			}
-		}
-	});
-
-	$header.addEventListener('mouseover', () => {
-		let titleY = $title.getBoundingClientRect().top;
-
-			if (titleY < 120) {
-				if (!headerIsVisible) {
-					headerIsVisible = true;
-					$header.style.opacity = 1;
-				}
-			}
-	});
-
-	$header.addEventListener('mouseout', () => {
-		let titleY = $title.getBoundingClientRect().top;
-
-		if (titleY < 120) {
-			if (headerIsVisible) {
-				headerIsVisible = false;
-				$header.style.opacity = 0.2;
-			}
-		}
-	})
-};
-
 const makeAlphabet = () => {
-	let $outer = document.querySelector('.alphabet__letters-inner');
+	let $outer = document.querySelector('.alphabet__letters');
 	$outer.innerHTML = '';
 
 	alphabet.forEach(letter => {
@@ -140,8 +100,15 @@ const makeAlphabet = () => {
 
 		$anchor.innerHTML = letter.toUpperCase();
 		$anchor.className = 'alphabet__letter-anchor';
-		if (activeEntries[letter]) $anchor.setAttribute('href', '#' + letter);
-
+		if (activeEntries[letter]) {
+			$anchor.classList.add('u-active');
+			$anchor.addEventListener('click', () => {
+				const letterNode = document.getElementById(letter);
+				const target = letter === 'a' ? document.getElementById('anchor-target') : letterNode.parentElement.parentElement.parentElement.parentElement.previousElementSibling.querySelector('.js-description');
+				console.log('target: ', target);
+				target.scrollIntoView({behavior: "smooth", block: "start"});
+			})
+		}
 		$outer.append($anchor);
 	});
 };
@@ -172,21 +139,18 @@ const setAlphabetAnchors = () => {
 
 		if (firstEntry) {
 			activeEntries[char] = 1;
-			// firstEntry.top = 200;
-			firstEntry.setAttribute('name', char);
+			firstEntry.setAttribute('id', char);
 		}
 	});
 
 	makeAlphabet();
 };
 
-const renderImages = (images) => {
-	let $imagesNodes = document.querySelectorAll('.article__images-inner');
-	let $images = $imagesNodes[$imagesNodes.length - 1];
-
+const renderImages = (images, $images) => {
 	images.forEach(image => {
+		const src = `../../assets/images/${image}`;
 		let $img = document.createElement('IMG');
-		$img.src = image;
+		$img.src = src;
 		$images.append($img);
 	})
 };
@@ -198,11 +162,20 @@ const renderEntries = () => {
 	$articleList.innerHTML = '';
 
 	entriesList.forEach(entry => {
-		let { title, lastName, firstName, images } = entry;
+		let { title, lastName, firstName, description, images } = entry;
 
 		$articleList.insertAdjacentHTML('beforeend', articleTemplate);
 
-		if (images.length) renderImages(images);
+		let $imagesNodes = document.querySelectorAll('.article__images-inner');
+		let $images = $imagesNodes[$imagesNodes.length - 1];
+
+		if (images.length) renderImages(images, $images);
+		
+		let $descriptionNode = document.createElement('p');
+		$descriptionNode.classList.add('.js-description', 'article-description');
+		$descriptionNode.innerHTML = description;
+
+		$images.append($descriptionNode);
 
 		let $titleNodes = document.querySelectorAll('.article-heading__title');
 		let $title = $titleNodes[$titleNodes.length - 1];
@@ -216,12 +189,6 @@ const renderEntries = () => {
 		$title.innerHTML = title;
 		$first.innerHTML = firstName;
 		$last.innerHTML = lastName;
-
-		let imageList = Array.from(document.querySelectorAll('.article__images-inner'));
-		imageList.forEach(image => {
-		let lastChild = image.lastElementChild;
-		if (lastChild) lastChild.style.paddingRight = '200px';
-	});
 
 	});
 
@@ -249,6 +216,7 @@ const fetchData = () => {
 		fetch(DB).then(res =>
 			res.json()
 		).then(data => {
+			console.log(data);
 			setData(data);
 		})
 		.then(() => {
@@ -258,11 +226,11 @@ const fetchData = () => {
 
 const init = () => {
 	fetchData();
-	mobileNav();
-	globalNav();
+	// mobileNav();
+	navLg();
+	makeAlphabet();
 	addSortButtonListeners();
-	setHeaderListeners();
-	addMobileControlButton();
+	// addMobileControlButton();
 }
 
 init();
