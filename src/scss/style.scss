@@ -30,7 +30,7 @@ h1 {
 }
 
 button {
-	padding: 6px;
+	padding: 0;
 	text-decoration: underline;
 	background: none;
 	border: none;
@@ -120,6 +120,24 @@ button {
 			}
 		}
 	}
+
+	&__sort-by {
+		margin-bottom: 6px;
+	}
+}
+
+.sort-by {
+	&__title {
+		margin-right: 3px;
+	}
+
+	&__by-artist {
+		margin-right: 4px;
+	}
+
+	&__divider {
+		margin-right: 4px;
+	}
 }
 
 .article-list {
@@ -144,7 +162,7 @@ button {
 		&__title {
 			font-size: 1.3em;
 			margin: 0 20px 20px 0;
-			max-width: 800px;
+			max-width: 700px;
 		}
 
 		&__name {
@@ -199,5 +217,22 @@ button {
 		order: 1;
 		position: relative;
 	}
+}
+
+.arrow {
+	cursor: pointer;
+	font-size: 2em;
+	opacity: 0;
+	padding-right: 100px;
+  position: fixed;
+  transform: translateY(-50px);
+  transition: opacity 0.4s ease-out;
+  right: 0;
+  z-index: 10; 
+
+  &.show {
+  	opacity: 1;
+  	transition: opacity 0.6s ease-in;
+  }
 }
 

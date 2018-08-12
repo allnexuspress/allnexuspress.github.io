@@ -1,5 +1,6 @@
-import mobileNav from './nav-mobile';
+// import mobileNav from './nav-mobile';
 import navLg from './nav-lg';
+import articleTemplate from './article-template';
 
 const DB = 'https://nexus-catalog.firebaseio.com/posts.json?auth=7g7pyKKykN3N5ewrImhOaS6vwrFsc5fKkrk8ejzf';
 const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'v', 'w', 'z'];
@@ -8,41 +9,44 @@ const $parallax = document.querySelector('.parallax');
 const $content = document.querySelector('.content');
 const $nav = document.getElementById('js-nav');
 const $title = document.getElementById('js-title');
+const $arrow = document.querySelector('.arrow');
 
-// 0 = artist, 1 = title
-let sortKey = 0;
-let entries = {
-	byAuthor: [],
-	byTitle: []
-};
+let sortKey = 0; // 0 = artist, 1 = title
+let entries = { byAuthor: [], byTitle: [] };
 let activeEntries = {};
-let headerIsVisible = true;
-
-let articleTemplate = `
-	<article class="article__outer">
-		<div class="article__inner">
-			<div class="article__heading">
-				<a class="js-entry-title"></a>
-				<h2 class="article-heading__title"></h2>
-				<div class="article-heading__name">
-					<span class="article-heading__name--first"></span>
-					<a class="js-entry-artist"></a>
-					<span class="article-heading__name--last"></span>
-				</div>
-			</div>
-				
-			<div class="article__images-outer">
-				<div class="article__images-inner"></div>
-				<p class="js-description"></p>
-			</div>
-		</div>
-	</article>
-`;
 
 const scrollToTop = () => {
-	let thing = document.querySelector('.parallax');
-	thing.scrollTop = 0;
+	let thing = document.getElementById('anchor-target');
+	thing.scrollIntoView({behavior: "smooth", block: "start"});
 }
+
+let prev;
+let current = 0;
+let isShowing = false;
+const attachArrowListeners = () => {
+	$arrow.addEventListener('click', () => {
+		scrollToTop();
+	});
+
+	$parallax.addEventListener('scroll', () => {
+		
+		let y = $title.getBoundingClientRect().y;
+		if (current !== y) {
+			prev = current;
+			current = y;
+		}
+
+		if (y <= -50 && !isShowing) {
+			$arrow.classList.add('show');
+			isShowing = true;
+		} else if (y > -50 && isShowing) {
+			$arrow.classList.remove('show');
+			isShowing = false;
+		}
+	});
+
+	// console.log('scroll', $title.offsetTop);
+};
 
 const addSortButtonListeners = () => {
 	let $artist = document.getElementById('js-by-artist');
@@ -65,31 +69,31 @@ const addSortButtonListeners = () => {
 	});
 };
 
-let isShowing = false;
-const toggleMobileNav = () => {
-	let $icon = document.getElementById('js-angle-icon');
-	let $list = document.getElementById('js-list');
+// let isShowing = false;
+// const toggleMobileNav = () => {
+// 	let $icon = document.getElementById('js-angle-icon');
+// 	let $list = document.getElementById('js-list');
 
-	if (!isShowing) {
-			$nav.classList.add('u-show');
-			$icon.setAttribute('style', 'transform: rotate(180deg');
-			$list.setAttribute('style', 'transform: translateY(210px)');
+// 	if (!isShowing) {
+// 			$nav.classList.add('u-show');
+// 			$icon.setAttribute('style', 'transform: rotate(180deg');
+// 			$list.setAttribute('style', 'transform: translateY(210px)');
 
-			isShowing = true;
-	} else {
-		$nav.classList.remove('u-show');
-		$nav.classList.add('u-hide')
-		$icon.setAttribute('style', 'transform: rotate(0deg');
-		$list.setAttribute('style', 'transform: translateY(65px)');
+// 			isShowing = true;
+// 	} else {
+// 		$nav.classList.remove('u-show');
+// 		$nav.classList.add('u-hide')
+// 		$icon.setAttribute('style', 'transform: rotate(0deg');
+// 		$list.setAttribute('style', 'transform: translateY(65px)');
 
-		isShowing = false;
-	}
-};
+// 		isShowing = false;
+// 	}
+// };
 
-const addMobileControlButton = () => {
-	let $button = document.getElementById('js-mobile-nav');
-	$button.addEventListener('click', toggleMobileNav);
-};
+// const addMobileControlButton = () => {
+// 	let $button = document.getElementById('js-mobile-nav');
+// 	$button.addEventListener('click', toggleMobileNav);
+// };
 
 const makeAlphabet = () => {
 	let $outer = document.querySelector('.alphabet__letters');
@@ -216,7 +220,6 @@ const fetchData = () => {
 		fetch(DB).then(res =>
 			res.json()
 		).then(data => {
-			console.log(data);
 			setData(data);
 		})
 		.then(() => {
@@ -230,6 +233,7 @@ const init = () => {
 	navLg();
 	makeAlphabet();
 	addSortButtonListeners();
+	attachArrowListeners();
 	// addMobileControlButton();
 }
 
