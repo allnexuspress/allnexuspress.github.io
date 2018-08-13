@@ -103,6 +103,38 @@ button {
   }
 }
 
+.lightbox {
+	align-items: center;
+	display: none;
+	height: 100%;
+	justify-content: center;
+	overflow: scroll;
+	position: absolute;
+	width: 100%;
+	z-index: 10;
+
+	&-inner {
+		display: flex;
+		justify-content: center;
+		overflow: scroll;
+		overflow-x: scroll;
+		padding-bottom: 10vh;
+	}
+
+	&-view {
+		cursor: zoom-out;
+		background-position: center;
+    background-size: cover;
+    height: 100%;
+    position: absolute;
+    width: 80%;
+	}
+
+	&.show-img {
+		display: flex;
+	}
+}
+
 .show {
 	display: flex;
 	opacity: 1;
@@ -150,6 +182,7 @@ button {
 
 .nav {
 	&--lg {
+		opacity: 0.9em;
 		order: 1;
 		padding: 0 10px 0;
 		position: fixed;
@@ -291,13 +324,12 @@ button {
 		&__outer {
 			display: flex;
 			flex-direction: column;
-			padding-left: 90px;
-			padding-right: 70%;
+			padding-right: 60%;
 		}
 	}
 
 	&-detail {
-		font-size: 0.8em;
+		font-size: 0.85em;
 	}
 }
 
@@ -336,7 +368,7 @@ button {
 	cursor: pointer;
 	font-size: 2em;
 	opacity: 0;
-	padding-right: 100px;
+	padding-right: 20px;
   position: fixed;
   transform: translateY(-50px);
   transition: opacity 0.4s ease-out;
@@ -357,7 +389,7 @@ button {
 
 @media screen and (max-width: $breakpoint-lg) {
 	.article-description__outer {
-		padding-right: 51%;
+		padding-right: 39%;
 	}
 }
 

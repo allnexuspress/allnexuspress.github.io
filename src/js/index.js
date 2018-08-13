@@ -10,10 +10,35 @@ const $content = document.querySelector('.content');
 const $title = document.getElementById('js-title');
 const $arrow = document.querySelector('.arrow');
 const $modal = document.querySelector('.modal');
+const $lightbox = document.querySelector('.lightbox');
+const $view = document.querySelector('.lightbox-view');
 
 let sortKey = 0; // 0 = artist, 1 = title
 let entries = { byAuthor: [], byTitle: [] };
 let activeEntries = {};
+
+let lightbox = false;
+const attachImageListeners = () => {
+	const $images = Array.from(document.querySelectorAll('.article-image'));
+	console.log('images: ', $images);
+
+	$images.forEach(img => {
+		img.addEventListener('click', () => {
+			console.log('cliked ', img.src)
+			let src = img.src;
+			$lightbox.classList.add('show-img');
+			$view.setAttribute('style', `background-image: url(${src})`);
+			lightbox = true;
+		})
+	});
+
+	$view.addEventListener('click', () => {
+		if (lightbox) {
+			$lightbox.classList.remove('show-img');
+			lightbox = false;
+		}
+	});
+}
 
 let modal = false;
 const attachModalListeners = () => {
@@ -21,11 +46,24 @@ const attachModalListeners = () => {
 	
 	$find.addEventListener('click', () => {
 		$modal.classList.add('show');
+		modal = true;
 	});
 
 	$modal.addEventListener('click', () => {
-		$modal.classList.remove('show');
-	})
+		setTimeout(() => {
+			$modal.classList.remove('show');
+			modal = false;
+		}, 500);
+	});
+
+	window.addEventListener('keydown', () => {
+		// preventDefault();
+		console.log('keydown');
+		if (modal) {
+			$modal.classList.remove('show');
+			modal = false;
+		}
+	});
 }
 
 const scrollToTop = () => {
@@ -57,8 +95,6 @@ const attachArrowListeners = () => {
 			isShowing = false;
 		}
 	});
-
-	// console.log('scroll', $title.offsetTop);
 };
 
 const addSortButtonListeners = () => {
@@ -144,6 +180,7 @@ const renderImages = (images, $images) => {
 	images.forEach(image => {
 		const src = `../../assets/images/${image}`;
 		let $img = document.createElement('IMG');
+		$img.className = 'article-image';
 		$img.src = src;
 		$images.append($img);
 	})
@@ -220,6 +257,7 @@ const fetchData = () => {
 			setData(data);
 		})
 		.then(() => {
+			attachImageListeners();
 		})
 		.catch(err => console.warn(err));
 };
