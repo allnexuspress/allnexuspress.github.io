@@ -2,7 +2,7 @@ import navLg from './nav-lg';
 import articleTemplate from './article-template';
 
 const DB = 'https://nexus-catalog.firebaseio.com/posts.json?auth=7g7pyKKykN3N5ewrImhOaS6vwrFsc5fKkrk8ejzf';
-const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'v', 'w', 'z'];
+const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'v', 'w', 'y', 'z'];
 
 const $nav = document.getElementById('js-nav');
 const $parallax = document.querySelector('.parallax');
@@ -20,11 +20,9 @@ let activeEntries = {};
 let lightbox = false;
 const attachImageListeners = () => {
 	const $images = Array.from(document.querySelectorAll('.article-image'));
-	console.log('images: ', $images);
 
 	$images.forEach(img => {
 		img.addEventListener('click', () => {
-			console.log('cliked ', img.src)
 			let src = img.src;
 			$lightbox.classList.add('show-img');
 			$view.setAttribute('style', `background-image: url(${src})`);
@@ -57,12 +55,12 @@ const attachModalListeners = () => {
 	});
 
 	window.addEventListener('keydown', () => {
-		// preventDefault();
-		console.log('keydown');
 		if (modal) {
-			$modal.classList.remove('show');
-			modal = false;
-		}
+			setTimeout(() => {
+				$modal.classList.remove('show');
+				modal = false;
+			}, 600);
+		};
 	});
 }
 
@@ -127,6 +125,7 @@ const makeAlphabet = () => {
 
 	alphabet.forEach(letter => {
 		let $anchor = document.createElement('a');
+		let target;
 
 		$anchor.innerHTML = letter.toUpperCase();
 		$anchor.className = 'alphabet__letter-anchor';
@@ -134,8 +133,11 @@ const makeAlphabet = () => {
 			$anchor.classList.add('u-active');
 			$anchor.addEventListener('click', () => {
 				const letterNode = document.getElementById(letter);
-				const target = letter === 'a' ? document.getElementById('anchor-target') : letterNode.parentElement.parentElement.parentElement.parentElement.previousElementSibling.querySelector('.js-article-anchor-target');
-				console.log('target: ', target);
+				if (!sortKey) {
+					target = letter === 'a' ? document.getElementById('anchor-target') : letterNode.parentElement.parentElement.parentElement.parentElement.previousElementSibling.querySelector('.js-article-anchor-target');
+				} else {
+					target = letter === 'a' ? document.getElementById('anchor-target') : letterNode.parentElement.parentElement.parentElement.previousElementSibling.querySelector('.js-article-anchor-target');
+				}
 				target.scrollIntoView({behavior: "smooth", block: "start"});
 			})
 		}
