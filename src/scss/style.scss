@@ -7,14 +7,6 @@ $breakpoint-md: 768px;
 $breakpoint-lg: 1024px;
 $breakpoint-xl: 1200px;
 
-@keyframes fadeIn {
-
-}
-
-@keyframes fadeOut {
-	
-}
-
 body {
 	font-family: $font-stack; 
 }
@@ -222,11 +214,9 @@ button {
 					margin-right: 8px;
 				}
 
-				&__letters {
-					cursor: pointer;
-				}
-
 				&__letter-anchor {
+					color: black;
+					cursor: pointer;
 					margin-right: 6px;
 					text-decoration: underline;
 
@@ -249,20 +239,20 @@ button {
 	}
 
 	&__by-artist {
-		cursor: pointer;
 		margin-right: 4px;
 		transition: all 0.5s;
 
 		&.active {
+			cursor: default;
 			text-decoration: none;
 		}
 	}
 
 	&__by-title {
-		cursor: pointer;
 		margin-right: 6px;
 
 		&.active {
+			cursor: default;
 			transition: all 0.5s;
 			text-decoration: none;
 		}

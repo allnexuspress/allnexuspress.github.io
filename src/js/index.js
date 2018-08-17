@@ -15,7 +15,7 @@ const $view = document.querySelector('.lightbox-view');
 
 let sortKey = 0; // 0 = artist, 1 = title
 let entries = { byAuthor: [], byTitle: [] };
-let activeEntries = {};
+let currentLetter = 'A';
 
 let lightbox = false;
 const attachImageListeners = () => {
@@ -99,49 +99,25 @@ const addSortButtonListeners = () => {
 	let $byArtist = document.getElementById('js-by-artist');
 	let $byTitle = document.getElementById('js-by-title');
 	$byArtist.addEventListener('click', () => {
-		scrollToTop();
 		if (sortKey) {
+			scrollToTop();
 			sortKey = 0;
 			$byArtist.classList.add('active');
 			$byTitle.classList.remove('active');
+
 			renderEntries();
 		}
 	});
 
 	$byTitle.addEventListener('click', () => {
-		scrollToTop();
 		if (!sortKey) {
+			scrollToTop();
 			sortKey = 1;
 			$byTitle.classList.add('active');
 			$byArtist.classList.remove('active');
+
 			renderEntries();
 		}
-	});
-};
-
-const makeAlphabet = () => {
-	let $outer = document.querySelector('.alphabet__letters');
-	$outer.innerHTML = '';
-
-	alphabet.forEach(letter => {
-		let $anchor = document.createElement('a');
-		let target;
-
-		$anchor.innerHTML = letter.toUpperCase();
-		$anchor.className = 'alphabet__letter-anchor';
-		if (activeEntries[letter]) {
-			$anchor.classList.add('u-active');
-			$anchor.addEventListener('click', () => {
-				const letterNode = document.getElementById(letter);
-				if (!sortKey) {
-					target = letter === 'a' ? document.getElementById('anchor-target') : letterNode.parentElement.parentElement.parentElement.parentElement.previousElementSibling.querySelector('.js-article-anchor-target');
-				} else {
-					target = letter === 'a' ? document.getElementById('anchor-target') : letterNode.parentElement.parentElement.parentElement.previousElementSibling.querySelector('.js-article-anchor-target');
-				}
-				target.scrollIntoView({behavior: "smooth", block: "start"});
-			})
-		}
-		$outer.append($anchor);
 	});
 };
 
@@ -163,19 +139,40 @@ const findFirstEntry = (char) => {
 	});
 };
 
-const setAlphabetAnchors = () => {
-	activeEntries = {};
+const attachAnchorListener = ($anchor, letter) => {
 
-	alphabet.forEach(char => {
-		let firstEntry = findFirstEntry(char);
+	$anchor.addEventListener('click', () => {
+		const letterNode = document.getElementById(letter);
+		let target;
 
-		if (firstEntry) {
-			activeEntries[char] = 1;
-			firstEntry.setAttribute('id', char);
-		}
+		if (!sortKey) {
+			target = letter === 'a' ? document.getElementById('anchor-target') : letterNode.parentElement.parentElement.parentElement.parentElement.previousElementSibling.querySelector('.js-article-anchor-target');
+		} else {
+			target = letter === 'a' ? document.getElementById('anchor-target') : letterNode.parentElement.parentElement.parentElement.previousElementSibling.querySelector('.js-article-anchor-target');
+		};
+
+		target.scrollIntoView({behavior: "smooth", block: "start"});
 	});
+};
 
-	makeAlphabet();
+const makeAlphabet = () => {
+	let activeEntries = {};
+	let $outer = document.querySelector('.alphabet__letters');
+	$outer.innerHTML = '';
+
+	alphabet.forEach(letter => {
+		let $firstEntry = findFirstEntry(letter);
+		let $anchor = document.createElement('a');
+
+		if (!$firstEntry) return;
+
+		$firstEntry.id = letter;
+		$anchor.innerHTML = letter.toUpperCase();
+		$anchor.className = 'alphabet__letter-anchor';
+
+		attachAnchorListener($anchor, letter);
+		$outer.append($anchor);
+	});
 };
 
 const renderImages = (images, $images) => {
@@ -232,7 +229,7 @@ const renderEntries = () => {
 
 	});
 
-	setAlphabetAnchors();
+	makeAlphabet();
 };
 
 const sortByTitle = () => {
@@ -267,7 +264,7 @@ const fetchData = () => {
 const init = () => {
 	fetchData();
 	navLg();
-	makeAlphabet();
+	renderEntries();
 	addSortButtonListeners();
 	attachArrowListeners();
 	attachModalListeners();
