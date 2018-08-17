@@ -1,4 +1,5 @@
 const browserify = require('browserify'),
+			babelify = require('babelify');
 			gulp = require('gulp'),
 			sourcemaps = require('gulp-sourcemaps'),
 			sass = require('gulp-sass'),
@@ -15,7 +16,7 @@ const entryPoint = './src/js/index.js',
 
 gulp.task('js', () => {
 	return browserify(entryPoint, { debug: true, extenstions: ['es6'] })
-		.transform('babelify', { presets: ['env'] })
+		.transform('babelify', { presets: ["babel-preset-env"] })
 		.bundle()
 		.pipe(source('bundle.js'))
 		.pipe(buffer())

@@ -45,7 +45,7 @@ button {
 
 	&.ready {
 		opacity: 1;
-		transition: opacity 1s ease-out;
+		transition: opacity 1s ease-in-out;
 	}
 }
 

@@ -21,15 +21,17 @@ let currentLetter = 'A';
 
 let lightbox = false;
 const attachImageListeners = () => {
-	const $images = Array.from(document.querySelectorAll('.article-image'));
+	let $images = Array.from(document.querySelectorAll('.article-image'));
 
 	$images.forEach(img => {
 		img.addEventListener('click', () => {
-			let src = img.src;
-			$lightbox.classList.add('show-img');
-			$view.setAttribute('style', `background-image: url(${src})`);
-			lightbox = true;
-		})
+			if (!lightbox) {
+				let src = img.src;
+				$lightbox.classList.add('show-img');
+				$view.setAttribute('style', `background-image: url(${src})`);
+				lightbox = true;
+			}
+		});
 	});
 
 	$view.addEventListener('click', () => {
@@ -38,7 +40,7 @@ const attachImageListeners = () => {
 			lightbox = false;
 		}
 	});
-}
+};
 
 let modal = false;
 const attachModalListeners = () => {
@@ -141,23 +143,23 @@ const findFirstEntry = (char) => {
 	});
 };
 
-const attachAnchorListener = ($anchor, letter) => {
-
-	$anchor.addEventListener('click', () => {
-		const letterNode = document.getElementById(letter);
-		let target;
-
-		if (!sortKey) {
-			target = letter === 'a' ? document.getElementById('anchor-target') : letterNode.parentElement.parentElement.parentElement.parentElement.previousElementSibling.querySelector('.js-article-anchor-target');
-		} else {
-			target = letter === 'a' ? document.getElementById('anchor-target') : letterNode.parentElement.parentElement.parentElement.previousElementSibling.querySelector('.js-article-anchor-target');
-		};
-
-		target.scrollIntoView({behavior: "smooth", block: "start"});
-	});
-};
 
 const makeAlphabet = () => {
+	const attachAnchorListener = ($anchor, letter) => {
+		$anchor.addEventListener('click', () => {
+			const letterNode = document.getElementById(letter);
+			let target;
+
+			if (!sortKey) {
+				target = letter === 'a' ? document.getElementById('anchor-target') : letterNode.parentElement.parentElement.parentElement.parentElement.previousElementSibling.querySelector('.js-article-anchor-target');
+			} else {
+				target = letter === 'a' ? document.getElementById('anchor-target') : letterNode.parentElement.parentElement.parentElement.previousElementSibling.querySelector('.js-article-anchor-target');
+			};
+
+			target.scrollIntoView({behavior: "smooth", block: "start"});
+		});
+	};
+
 	let activeEntries = {};
 	let $outer = document.querySelector('.alphabet__letters');
 	$outer.innerHTML = '';
@@ -173,7 +175,7 @@ const makeAlphabet = () => {
 		$anchor.className = 'alphabet__letter-anchor';
 
 		attachAnchorListener($anchor, letter);
-		$outer.append($anchor);
+		$outer.appendChild($anchor);
 	});
 };
 
@@ -183,7 +185,7 @@ const renderImages = (images, $images) => {
 		let $img = document.createElement('IMG');
 		$img.className = 'article-image';
 		$img.src = src;
-		$images.append($img);
+		$images.appendChild($img);
 	})
 };
 
@@ -213,8 +215,8 @@ const renderEntries = () => {
 		$descriptionNode.innerHTML = description;
 		$detailNode.innerHTML = detail;
 
-		$descriptionOuter.append($descriptionNode, $detailNode);
-		$images.append($descriptionOuter);
+		$descriptionOuter.appendChild($descriptionNode, $detailNode);
+		$images.appendChild($descriptionOuter);
 
 		let $titleNodes = document.querySelectorAll('.article-heading__title');
 		let $title = $titleNodes[$titleNodes.length - 1];
@@ -231,9 +233,11 @@ const renderEntries = () => {
 
 	});
 
+	attachImageListeners();
 	makeAlphabet();
 };
 
+// this needs to be a deeper sort
 const sortByTitle = () => {
 	entries.byTitle.sort((a, b) => {
 		let aTitle = a.title[0].toUpperCase();
@@ -252,14 +256,12 @@ const setData = (data) => {
 }
 
 const fetchData = () => {
-
 		fetch(DB).then(res =>
 			res.json()
 		).then(data => {
 			setData(data);
 		})
 		.then(() => {
-			attachImageListeners();
 			$loading.forEach(elem => elem.classList.add('ready'));
 			$nav.classList.add('ready');
 		})
