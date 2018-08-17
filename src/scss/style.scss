@@ -40,6 +40,15 @@ button {
 	}
 }
 
+.loading {
+	opacity: 0;
+
+	&.ready {
+		opacity: 1;
+		transition: opacity 1s ease-out;
+	}
+}
+
 .parallax {
 	perspective: 1px;
 	height: 100vh;

@@ -1,9 +1,11 @@
+import 'whatwg-fetch';
 import navLg from './nav-lg';
 import articleTemplate from './article-template';
 
 const DB = 'https://nexus-catalog.firebaseio.com/posts.json?auth=7g7pyKKykN3N5ewrImhOaS6vwrFsc5fKkrk8ejzf';
 const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'v', 'w', 'y', 'z'];
 
+const $loading = Array.from(document.querySelectorAll('.loading'));
 const $nav = document.getElementById('js-nav');
 const $parallax = document.querySelector('.parallax');
 const $content = document.querySelector('.content');
@@ -250,6 +252,7 @@ const setData = (data) => {
 }
 
 const fetchData = () => {
+
 		fetch(DB).then(res =>
 			res.json()
 		).then(data => {
@@ -257,6 +260,8 @@ const fetchData = () => {
 		})
 		.then(() => {
 			attachImageListeners();
+			$loading.forEach(elem => elem.classList.add('ready'));
+			$nav.classList.add('ready');
 		})
 		.catch(err => console.warn(err));
 };

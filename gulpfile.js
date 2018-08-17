@@ -15,7 +15,7 @@ const entryPoint = './src/js/index.js',
 
 gulp.task('js', () => {
 	return browserify(entryPoint, { debug: true, extenstions: ['es6'] })
-		.transform('babelify', { presets: ['es2015'] })
+		.transform('babelify', { presets: ['env'] })
 		.bundle()
 		.pipe(source('bundle.js'))
 		.pipe(buffer())
