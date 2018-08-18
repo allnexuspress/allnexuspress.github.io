@@ -20,13 +20,16 @@ let entries = { byAuthor: [], byTitle: [] };
 let currentLetter = 'A';
 
 let lightbox = false;
+let x2 = false;
 const attachImageListeners = () => {
 	let $images = Array.from(document.querySelectorAll('.article-image'));
 
 	$images.forEach(img => {
-		img.addEventListener('click', () => {
+		img.addEventListener('click', (evt) => {
 			if (!lightbox) {
 				let src = img.src;
+				// let type = img.width >= img.height ? 'l' : 'p';
+				
 				$lightbox.classList.add('show-img');
 				$view.setAttribute('style', `background-image: url(${src})`);
 				lightbox = true;
@@ -37,6 +40,7 @@ const attachImageListeners = () => {
 	$view.addEventListener('click', () => {
 		if (lightbox) {
 			$lightbox.classList.remove('show-img');
+			$lightbox.firstElementChild.classList.remove('view-x2');
 			lightbox = false;
 		}
 	});

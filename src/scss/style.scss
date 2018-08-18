@@ -45,7 +45,7 @@ button {
 
 	&.ready {
 		opacity: 1;
-		transition: opacity 1s ease-in-out;
+		transition: opacity 0.5s ease-out;
 	}
 }
 
@@ -64,6 +64,7 @@ button {
 	left: 0;
 
 	&--base {
+		min-width: 536px;
 		transform: translateZ(0);
 		background: linear-gradient(white, #808000, yellow, green, red, blue);
 	}
@@ -113,30 +114,35 @@ button {
 }
 
 .lightbox {
-	align-items: center;
 	display: none;
 	height: 100%;
-	justify-content: center;
 	overflow: scroll;
 	position: absolute;
 	width: 100%;
 	z-index: 10;
 
-	&-inner {
-		display: flex;
-		justify-content: center;
-		overflow: scroll;
-		overflow-x: scroll;
-		padding-bottom: 10vh;
+	&-layer {
+		display: none;
+
+		&.view-x2 {
+			background-color: red;
+			display: block;
+			width: 100%;
+			position: absolute;
+		}
 	}
 
 	&-view {
-		cursor: zoom-out;
 		background-position: center;
-    background-size: cover;
-    height: 100%;
-    position: absolute;
-    width: 80%;
+		background-repeat: no-repeat;
+		background-size: contain;
+    cursor: zoom-out;
+    margin: 0 auto;
+    width: 100%;
+
+    &.view-x2 {
+    	background-size: auto;
+		}
 	}
 
 	&.show-img {
@@ -191,6 +197,7 @@ button {
 
 .nav {
 	&--lg {
+		min-width: 620px;
 		opacity: 0.9em;
 		order: 1;
 		padding: 0 10px 0;
