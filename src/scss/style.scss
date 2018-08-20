@@ -380,11 +380,11 @@ button {
 
 .arrow {
 	cursor: pointer;
+	bottom: 0;
 	font-size: 2em;
 	opacity: 0;
 	padding-right: 20px;
   position: fixed;
-  transform: translateY(-50px);
   transition: opacity 0.4s ease-out;
   right: 0;
   z-index: 10; 
@@ -501,8 +501,6 @@ button {
 
 	.arrow {
 		font-size: 3.8em;
-		padding-right: 35px;
-		transform: translateY(-95px);
 	}
 
 }
@@ -619,9 +617,9 @@ button {
 	}
 
 	.arrow {
-		font-size: 3.8em;
-		padding-right: 35px;
-		transform: translateY(-95px);
+		font-size: 6em;
+    opacity: 1;
+    margin-bottom: 10px;
 	}
 
 }
