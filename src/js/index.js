@@ -1,4 +1,5 @@
 import 'whatwg-fetch';
+import smoothscroll from 'smoothscroll-polyfill';
 import navLg from './nav-lg';
 import articleTemplate from './article-template';
 
@@ -273,6 +274,7 @@ const fetchData = () => {
 };
 
 const init = () => {
+	smoothscroll.polyfill();
 	fetchData();
 	navLg();
 	renderEntries();

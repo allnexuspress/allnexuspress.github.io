@@ -24,6 +24,7 @@
     "vinyl-source-stream": "^2.0.0"
   },
   "dependencies": {
+    "smoothscroll-polyfill": "^0.4.3",
     "whatwg-fetch": "^2.0.4"
   }
 }
