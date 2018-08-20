@@ -50,11 +50,10 @@ button {
 }
 
 .parallax {
-/*	perspective: 1px;
+	perspective: 1px;
 	height: 100vh;
 	overflow-x: hidden;
 	overflow-y: scroll;
-	-webkit-overflow-scrolling: touch;*/
 }
 
 .parallax__layer {
@@ -411,6 +410,13 @@ button {
 @media only screen and (max-device-width: $breakpoint-md) {
 	h1 {
 		font-size: 3.5em;
+	}
+
+	.parallax {
+		perspective: auto;
+		height: auto;
+		overflow-x: auto;
+		overflow-y: auto;
 	}
 
 	.article-description__outer {
