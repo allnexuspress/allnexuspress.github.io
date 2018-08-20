@@ -53,7 +53,8 @@ button {
 	perspective: 1px;
 	height: 100vh;
 	overflow-x: hidden;
-	overflow-y: auto;
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
 }
 
 .parallax__layer {
