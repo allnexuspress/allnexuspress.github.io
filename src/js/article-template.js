@@ -13,8 +13,8 @@ const articleTemplate = `
 			<div class="article__slider-outer">
 				<div class="article__slider-inner"></div>
 				<div class="article__scroll-controls">
-					<span class="controls arrow-prev">◅</span> 
-					<span class="controls arrow-next">▻</span>
+					<span class="controls arrow-prev">←</span> 
+					<span class="controls arrow-next">→</span>
 				</div>
 				<p class="js-article-anchor-target"></p>
 		</div>
