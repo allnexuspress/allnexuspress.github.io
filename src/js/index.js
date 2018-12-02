@@ -1,28 +1,15 @@
 import smoothscroll from 'smoothscroll-polyfill';
 
 import { articleTemplate, navLg } from './templates';
-import { debounce } from './utils';
-
-
-const DB = 'https://nexus-catalog.firebaseio.com/posts.json?auth=7g7pyKKykN3N5ewrImhOaS6vwrFsc5fKkrk8ejzf';
-const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'v', 'w', 'y', 'z'];
-
-const $loading = Array.from(document.querySelectorAll('.loading'));
-const $nav = document.getElementById('js-nav');
-const $parallax = document.querySelector('.parallax');
-const $content = document.querySelector('.content');
-const $title = document.getElementById('js-title');
-const $arrow = document.querySelector('.arrow');
-const $modal = document.querySelector('.modal');
-const $lightbox = document.querySelector('.lightbox');
-const $view = document.querySelector('.lightbox-view');
+import { debounce, hideLoading } from './utils';
+import { DB, alphabet, $loading, $nav, $parallax, $content, $title, $arrow, $modal, $lightbox, $view } from './constants';
 
 let sortKey = 0; // 0 = artist, 1 = title
 let entries = { byAuthor: [], byTitle: [] };
 let currentLetter = 'A';
-
+let modal = false;
 let lightbox = false;
-let x2 = false;
+
 const attachImageListeners = () => {
 	const $images = Array.from(document.querySelectorAll('.article-image'));
 
@@ -46,7 +33,6 @@ const attachImageListeners = () => {
 	});
 };
 
-let modal = false;
 const attachModalListeners = () => {
 	const $find = document.getElementById('js-find');
 	
@@ -275,28 +261,24 @@ const sortByTitle = () => {
 const setData = (data) => {
 	entries.byAuthor = data;
 	entries.byTitle = data.slice(); // copies data for byTitle sort
+
 	sortByTitle();
 	renderEntries();
-}
+};
 
 const fetchData = () => {
-		fetch(DB).then(res =>
-			res.json()
-		).then(data => {
-			setData(data);
-		})
-		.then(() => {
-			$loading.forEach(elem => elem.classList.add('ready'));
-			$nav.classList.add('ready');
-		})
-		.catch(err => console.warn(err));
+	fetch(DB).then(res => res.json())
+	.then(data => {
+		setData(data);
+		hideLoading();
+	})
+	.catch(err => console.warn(err));
 };
 
 const init = () => {
 	smoothscroll.polyfill();
 	fetchData();
 	navLg();
-	renderEntries();
 	addSortButtonListeners();
 	attachArrowListeners();
 	attachModalListeners();

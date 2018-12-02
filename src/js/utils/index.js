@@ -1,3 +1,5 @@
+import { DB, alphabet, $loading, $nav, $parallax, $content, $title, $arrow, $modal, $lightbox, $view } from '../constants';
+
 const debounce = (fn, time) => {
   let timeout;
 
@@ -9,4 +11,12 @@ const debounce = (fn, time) => {
   }
 };
 
-export { debounce };
+const hideLoading = () => {
+	$loading.forEach(elem => {
+		elem.classList.remove('loading');
+		elem.classList.add('ready');
+	});
+	$nav.classList.add('ready');
+};
+
+export { debounce, hideLoading };
