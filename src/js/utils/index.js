@@ -12,11 +12,35 @@ const debounce = (fn, time) => {
 };
 
 const hideLoading = () => {
-	$loading.forEach(elem => {
-		elem.classList.remove('loading');
-		elem.classList.add('ready');
-	});
+	$loading.forEach(elem => elem.classList.add('ready'));
 	$nav.classList.add('ready');
 };
 
-export { debounce, hideLoading };
+const scrollToTop = () => {
+	let top = document.getElementById('anchor-target');
+	top.scrollIntoView({behavior: "smooth", block: "start"});
+};
+
+const makeSlider = ($slider) => {
+	const $arrowNext = $slider.parentElement.querySelector('.arrow-next');
+	const $arrowPrev = $slider.parentElement.querySelector('.arrow-prev');
+
+	let current = $slider.firstElementChild;
+	$arrowNext.addEventListener('click', () => {
+		const next = current.nextElementSibling;
+		if (next) {
+			next.scrollIntoView({behavior: "smooth", block: "nearest", inline: "center"});
+			current = next;
+		}
+	});
+
+	$arrowPrev.addEventListener('click', () => {
+		const prev = current.previousElementSibling;
+		if (prev) {
+			prev.scrollIntoView({behavior: "smooth", block: "nearest", inline: "center"});
+			current = prev;
+		}
+	})
+};
+
+export { debounce, hideLoading, scrollToTop, makeSlider };

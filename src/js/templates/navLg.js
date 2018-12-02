@@ -15,9 +15,9 @@ const template =
 		</div>
 	</div>`;
 
-const navLg = () => {
+const renderNavLg = () => {
 	let navOuter = document.getElementById('js-nav');
 	navOuter.innerHTML = template;
 };
 
-export default navLg;
+export default renderNavLg;

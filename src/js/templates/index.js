@@ -1,4 +1,4 @@
 import articleTemplate from './article';
-import navLg from './navLg';
+import renderNavLg from './navLg';
 
-export { articleTemplate, navLg };
+export { articleTemplate, renderNavLg };
