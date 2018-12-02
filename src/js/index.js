@@ -1,7 +1,8 @@
-import 'whatwg-fetch';
 import smoothscroll from 'smoothscroll-polyfill';
+
 import navLg from './nav-lg';
 import articleTemplate from './article-template';
+
 
 const DB = 'https://nexus-catalog.firebaseio.com/posts.json?auth=7g7pyKKykN3N5ewrImhOaS6vwrFsc5fKkrk8ejzf';
 const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'v', 'w', 'y', 'z'];
@@ -57,10 +58,8 @@ const attachModalListeners = () => {
 	});
 
 	$modal.addEventListener('click', () => {
-		setTimeout(() => {
-			$modal.classList.remove('show');
-			modal = false;
-		}, 500);
+		$modal.classList.remove('show');
+		modal = false;
 	});
 
 	window.addEventListener('keydown', () => {
@@ -187,32 +186,35 @@ const makeAlphabet = () => {
 const renderImages = (images, $images) => {
 	images.forEach(image => {
 		const src = `../../assets/images/${image}`;
-		let $img = document.createElement('IMG');
+		const $imgOuter = document.createElement('div');
+		const $img = document.createElement('IMG');
 		$img.className = 'article-image';
 		$img.src = src;
-		$images.appendChild($img);
+		$imgOuter.appendChild($img);
+		$images.appendChild($imgOuter);
 	})
 };
 
 const renderEntries = () => {
-	let $articleList = document.getElementById('js-list');
-	let entriesList = sortKey ? entries.byTitle : entries.byAuthor;
+	const $articleList = document.getElementById('js-list');
+	const entriesList = sortKey ? entries.byTitle : entries.byAuthor;
 
 	$articleList.innerHTML = '';
 
 	entriesList.forEach(entry => {
-		let { title, lastName, firstName, images, description, detail } = entry;
+		const { title, lastName, firstName, images, description, detail } = entry;
 
 		$articleList.insertAdjacentHTML('beforeend', articleTemplate);
 
-		let $imagesNodes = document.querySelectorAll('.article__images-inner');
-		let $images = $imagesNodes[$imagesNodes.length - 1];
+		const $allSliders = document.querySelectorAll('.article__slider-inner');
+		const $slider = $allSliders[$allSliders.length - 1];
+		// const $images = $slider.querySelector('.article__images');
 
-		if (images.length) renderImages(images, $images);
+		if (images.length) renderImages(images, $slider);
 		
-		let $descriptionOuter = document.createElement('div');
-		let $descriptionNode = document.createElement('p');
-		let $detailNode = document.createElement('p');
+		const $descriptionOuter = document.createElement('div');
+		const $descriptionNode = document.createElement('p');
+		const $detailNode = document.createElement('p');
 		$descriptionOuter.classList.add('article-description__outer');
 		$descriptionNode.classList.add('article-description');
 		$detailNode.classList.add('article-detail');
@@ -221,21 +223,40 @@ const renderEntries = () => {
 		$detailNode.innerHTML = detail;
 
 		$descriptionOuter.appendChild($descriptionNode, $detailNode);
-		$images.appendChild($descriptionOuter);
+		$slider.appendChild($descriptionOuter);
 
-		let $titleNodes = document.querySelectorAll('.article-heading__title');
-		let $title = $titleNodes[$titleNodes.length - 1];
+		const $titleNodes = document.querySelectorAll('.article-heading__title');
+		const $title = $titleNodes[$titleNodes.length - 1];
 
-		let $firstNodes = document.querySelectorAll('.article-heading__name--first');
-		let $first = $firstNodes[$firstNodes.length - 1];
+		const $firstNodes = document.querySelectorAll('.article-heading__name--first');
+		const $first = $firstNodes[$firstNodes.length - 1];
 
-		let $lastNodes = document.querySelectorAll('.article-heading__name--last');
-		let $last = $lastNodes[$lastNodes.length - 1];
+		const $lastNodes = document.querySelectorAll('.article-heading__name--last');
+		const $last = $lastNodes[$lastNodes.length - 1];
 
 		$title.innerHTML = title;
 		$first.innerHTML = firstName;
 		$last.innerHTML = lastName;
 
+		const $arrowNext = $slider.parentElement.querySelector('.arrow-next');
+		const $arrowPrev = $slider.parentElement.querySelector('.arrow-prev');
+
+		let current = $slider.firstElementChild;
+		$arrowNext.addEventListener('click', () => {
+			const next = current.nextElementSibling;
+			if (next) {
+				next.scrollIntoView({behavior: "smooth", block: "nearest", inline: "center"});
+				current = next;
+			}
+		});
+
+		$arrowPrev.addEventListener('click', () => {
+			const prev = current.previousElementSibling;
+			if (prev) {
+				prev.scrollIntoView({behavior: "smooth", block: "nearest", inline: "center"});
+				current = prev;
+			}
+		})
 	});
 
 	attachImageListeners();
@@ -255,7 +276,7 @@ const sortByTitle = () => {
 
 const setData = (data) => {
 	entries.byAuthor = data;
-	entries.byTitle = data.slice();
+	entries.byTitle = data.slice(); // copies data for byTitle sort
 	sortByTitle();
 	renderEntries();
 }

@@ -10,8 +10,12 @@ const articleTemplate = `
 					<span class="article-heading__name--last"></span>
 				</div>
 			</div>	
-			<div class="article__images-outer">
-				<div class="article__images-inner"></div>
+			<div class="article__slider-outer">
+				<div class="article__slider-inner"></div>
+				<div class="article__scroll-controls">
+					<span class="controls arrow-prev">◅</span> 
+					<span class="controls arrow-next">▻</span>
+				</div>
 				<p class="js-article-anchor-target"></p>
 		</div>
 	</article>

@@ -21,7 +21,13 @@ a {
 
 h1 {
 	font-size: 3em;
+	font-weight: 600;
+	letter-spacing: 0.02em;
 	margin: 0;
+}
+
+h2 {
+	font-weight: 500;
 }
 
 button {
@@ -141,6 +147,7 @@ button {
     width: 100%;
 
     &.view-x2 {
+    	width: 100%;
     	background-size: auto;
 		}
 	}
@@ -191,12 +198,13 @@ button {
 }
 
 .content {
-	padding: 180px 100px 180px 0;
+	padding: 180px 0;
 	position: relative;
 }
 
 .nav {
 	&--lg {
+		font-size: 1.1em;
 		min-width: 620px;
 		opacity: 0.9em;
 		order: 1;
@@ -222,6 +230,7 @@ button {
 			display: flex;
 			flex-direction: column;
 		}
+
 		.nav__alphabet {
 			display: flex;
 
@@ -233,7 +242,7 @@ button {
 				&__letter-anchor {
 					color: black;
 					cursor: pointer;
-					margin-right: 6px;
+					margin-right: 0.5em;
 					text-decoration: underline;
 
 					&:hover {
@@ -259,16 +268,16 @@ button {
 		transition: all 0.5s;
 
 		&.active {
-			cursor: default;
+			cursor: text;
 			text-decoration: none;
 		}
 	}
 
 	&__by-title {
-		margin-right: 6px;
+		margin-right: 10px;
 
 		&.active {
-			cursor: default;
+			cursor: text;
 			transition: all 0.5s;
 			text-decoration: none;
 		}
@@ -281,6 +290,10 @@ button {
 
 .find {
 	cursor: context-menu;
+
+	&--inner {
+		padding: 0 4px 0 3px;
+	}
 }
 
 .article-list {
@@ -290,7 +303,18 @@ button {
 	position: relative;
 }
 
+.controls {
+	padding: 5px;
+	font-size: 1.2em;
+}
+
 .article {
+	&__scroll-controls {
+		cursor: pointer;
+		padding-left: 96px;
+		transform: translateY(-10px);
+	}
+
 	&__outer {
 		padding: 0 0 100px 0;
 	}
@@ -301,44 +325,43 @@ button {
 		padding-left: 100px;
 	}
 
-	&-heading{
+	&-heading {
 		&__title {
 			font-size: 1.3em;
-			margin-right: 20px;
-			max-width: 700px;
+			letter-spacing: 0.02em;
+			margin: 0 10px 20px 0;
 		}
 
 		&__name {
-			margin-bottom: 20px;
-			max-width: 450px;
+			font-weight: 300;
+			letter-spacing: 0.01em;
 		}
 	}
 
-	&__images {
-		&-inner {
-			display: flex;
-			padding-left: 100px;
-			flex-wrap: nowrap;
-			overflow-x: auto;
-			overflow-y: hidden;
+	&__slider-inner {
+		display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-left: 30px;
 
-			img {
-				cursor: zoom-in;
-				margin: 0 30px 0 0;
-				max-height: 350px;
-			}
+		img {
+			cursor: zoom-in;
+			margin: 0 30px 0 0;
+			max-height: 450px;
 		}
 	}
 
 	&-description {
 		font-size: 0.9em;
+		font-weight: 300;
+		letter-spacing: 0.02em;
 		margin: 0 0 10px 0;
 		min-width: 400px;
 
 		&__outer {
 			display: flex;
 			flex-direction: column;
-			padding-right: 60%;
+			padding-right: 30px;
 		}
 	}
 
@@ -347,13 +370,15 @@ button {
 	}
 }
 
-.article__images-inner::-webkit-scrollbar {
-	display: none;
+.article__slider-inner::-webkit-scrollbar {
+	background: transparent;
 }
 
 .about {
+	font-weight: 300;
+	letter-spacing: 0.02em;
 	margin-bottom: 100px;
-	padding-left: 100px;
+	padding: 0 100px;
 }
 
 .header {
@@ -395,18 +420,6 @@ button {
   }
 }
 
-@media screen and (max-width: $breakpoint-xl) {
-	.article-description__outer {
-		padding-right: 60%;
-	}
-}
-
-@media screen and (max-width: $breakpoint-lg) {
-	.article-description__outer {
-		padding-right: 39%;
-	}
-}
-
 @media only screen and (max-device-width: $breakpoint-md) {
 	h1 {
 		font-size: 3.5em;
@@ -417,10 +430,6 @@ button {
 		height: auto;
 		overflow-x: hidden;
 		overflow-y: auto;
-	}
-
-	.article-description__outer {
-		padding-right: 54.6%;
 	}
 
 	.content {
@@ -470,14 +479,8 @@ button {
 			padding-left: 50px;
 		}
 
-		&__images {
-			&-inner {
+		&__slider-inner {
 				padding-left: 50px;
-
-				img {
-					max-height: 400px;
-				}
-			}
 		}
 
 		&-heading {
@@ -566,13 +569,9 @@ button {
 		padding-left: 50px;
 	}
 
-	.article-description__outer {
-		padding-right: 37.5%;
-	}
-
 	.article {
 		&__outer {
-			padding: 110px 0 80px 0;
+			padding: 180px 0;
 		}
 
 		&__heading {
@@ -605,14 +604,12 @@ button {
 			font-size: 1.8em;
 		}
 
-		&__images {
-			&-inner {
+		&__slider-inner {
 				padding-left: 50px;
 
 				img {
-					max-height: 700px;
+					max-height: 900px;
 				}
-			}
 		}
 	}
 
@@ -628,10 +625,6 @@ button {
 
 	h1 {
 		font-size: 7em;
-	}
-
-	.article-description__outer {
-		padding-right: 29.5%;
 	}
 }
 
