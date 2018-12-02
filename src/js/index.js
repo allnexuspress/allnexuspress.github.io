@@ -2,6 +2,7 @@ import smoothscroll from 'smoothscroll-polyfill';
 
 import navLg from './nav-lg';
 import articleTemplate from './article-template';
+import { debounce } from './utils';
 
 
 const DB = 'https://nexus-catalog.firebaseio.com/posts.json?auth=7g7pyKKykN3N5ewrImhOaS6vwrFsc5fKkrk8ejzf';
@@ -24,13 +25,12 @@ let currentLetter = 'A';
 let lightbox = false;
 let x2 = false;
 const attachImageListeners = () => {
-	let $images = Array.from(document.querySelectorAll('.article-image'));
+	const $images = Array.from(document.querySelectorAll('.article-image'));
 
 	$images.forEach(img => {
 		img.addEventListener('click', (evt) => {
 			if (!lightbox) {
 				let src = img.src;
-				// let type = img.width >= img.height ? 'l' : 'p';
 				
 				$lightbox.classList.add('show-img');
 				$view.setAttribute('style', `background-image: url(${src})`);
@@ -42,7 +42,6 @@ const attachImageListeners = () => {
 	$view.addEventListener('click', () => {
 		if (lightbox) {
 			$lightbox.classList.remove('show-img');
-			$lightbox.firstElementChild.classList.remove('view-x2');
 			lightbox = false;
 		}
 	});

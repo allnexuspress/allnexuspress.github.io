@@ -21,7 +21,6 @@ a {
 
 h1 {
 	font-size: 3em;
-	font-weight: 600;
 	letter-spacing: 0.02em;
 	margin: 0;
 }
@@ -129,13 +128,6 @@ button {
 
 	&-layer {
 		display: none;
-
-		&.view-x2 {
-			background-color: red;
-			display: block;
-			width: 100%;
-			position: absolute;
-		}
 	}
 
 	&-view {
@@ -147,8 +139,8 @@ button {
     width: 100%;
 
     &.view-x2 {
-    	width: 100%;
-    	background-size: auto;
+    	background-size: cover;
+    	cursor: zoom-out;
 		}
 	}
 
@@ -229,6 +221,7 @@ button {
 			align-items: center;
 			display: flex;
 			flex-direction: column;
+			font-weight: 200;
 		}
 
 		.nav__alphabet {
@@ -259,6 +252,8 @@ button {
 }
 
 .sort-by {
+	font-weight: 200;
+
 	&__title {
 		margin-right: 3px;
 	}
@@ -318,7 +313,7 @@ button {
 	}
 
 	&__outer {
-		padding: 0 0 80px 0;
+		padding: 0 0 100px 0;
 	}
 
 	&__heading {
@@ -330,6 +325,7 @@ button {
 	&-heading {
 		&__title {
 			font-size: 1.3em;
+			hyphens: auto;
 			letter-spacing: 0.02em;
 			margin: 0 10px 20px 0;
 		}
