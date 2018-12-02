@@ -1,4 +1,4 @@
-import { DB, alphabet, $loading, $nav, $parallax, $content, $title, $arrow, $modal, $lightbox, $view } from '../constants';
+import { $loading, $nav, $parallax, $content, $title, $arrow, $modal, $lightbox, $view } from '../constants';
 
 const debounce = (fn, time) => {
   let timeout;

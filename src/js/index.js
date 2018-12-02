@@ -2,7 +2,7 @@ import smoothscroll from 'smoothscroll-polyfill';
 
 import { articleTemplate, navLg } from './templates';
 import { debounce, hideLoading } from './utils';
-import { DB, alphabet, $loading, $nav, $parallax, $content, $title, $arrow, $modal, $lightbox, $view } from './constants';
+import { DB, alphabet, $nav, $parallax, $content, $title, $arrow, $modal, $lightbox, $view } from './constants';
 
 let sortKey = 0; // 0 = artist, 1 = title
 let entries = { byAuthor: [], byTitle: [] };
