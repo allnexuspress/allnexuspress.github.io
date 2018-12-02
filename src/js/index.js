@@ -2,9 +2,9 @@ import smoothscroll from 'smoothscroll-polyfill';
 
 import { articleTemplate, renderNavLg } from './templates';
 import { debounce, hideLoading, scrollToTop, makeSlider } from './utils';
+import makeAlphabet from './makeAlphabet';
 
-import { DB, alphabet, $nav, $parallax, $content, $title, $arrow, $modal, $lightbox, $view } from './constants';
-
+import { DB, $nav, $parallax, $content, $title, $arrow, $modal, $lightbox, $view } from './constants';
 
 let sortKey = 0; // 0 = artist, 1 = title
 let entries = { byAuthor: [], byTitle: [] };
@@ -110,56 +110,6 @@ const addSortButtonListeners = () => {
 	});
 };
 
-const findFirstEntry = (char) => {
-	const selector = sortKey ? '.js-entry-title' : '.js-entry-artist';
-	const prevSelector = !sortKey ? '.js-entry-title' : '.js-entry-artist';
-
-	const $entries = Array.from(document.querySelectorAll(selector));
-	const $prevEntries = Array.from(document.querySelectorAll(prevSelector));
-
-	$prevEntries.forEach(entry => entry.removeAttribute('name'));
-
-	return $entries.find(entry => {
-		let node = entry.nextElementSibling;
-		return node.innerHTML[0] === char || node.innerHTML[0] === char.toUpperCase();
-	});
-};
-
-const makeAlphabet = () => {
-	const attachAnchorListener = ($anchor, letter) => {
-		$anchor.addEventListener('click', () => {
-			const letterNode = document.getElementById(letter);
-			let target;
-
-			if (!sortKey) {
-				target = letter === 'a' ? document.getElementById('anchor-target') : letterNode.parentElement.parentElement.parentElement.parentElement.previousElementSibling.querySelector('.js-article-anchor-target');
-			} else {
-				target = letter === 'a' ? document.getElementById('anchor-target') : letterNode.parentElement.parentElement.parentElement.previousElementSibling.querySelector('.js-article-anchor-target');
-			};
-
-			target.scrollIntoView({behavior: "smooth", block: "start"});
-		});
-	};
-
-	let activeEntries = {};
-	let $outer = document.querySelector('.alphabet__letters');
-	$outer.innerHTML = '';
-
-	alphabet.forEach(letter => {
-		let $firstEntry = findFirstEntry(letter);
-		let $anchor = document.createElement('a');
-
-		if (!$firstEntry) return;
-
-		$firstEntry.id = letter;
-		$anchor.innerHTML = letter.toUpperCase();
-		$anchor.className = 'alphabet__letter-anchor';
-
-		attachAnchorListener($anchor, letter);
-		$outer.appendChild($anchor);
-	});
-};
-
 const renderEntries = () => {
 	const $articleList = document.getElementById('js-list');
 	const entriesList = sortKey ? entries.byTitle : entries.byAuthor;
@@ -172,7 +122,7 @@ const renderEntries = () => {
 	});
 
 	attachImageListeners();
-	makeAlphabet();
+	makeAlphabet(sortKey);
 };
 
 const setDataAndSortByTitle = (data) => {
