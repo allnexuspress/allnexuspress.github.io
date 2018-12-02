@@ -1,0 +1,87 @@
+@media only screen and (max-device-width: $breakpoint-md) {
+	h1 {
+		font-size: 3.5em;
+	}
+
+	.parallax {
+		perspective: auto;
+		height: auto;
+		overflow-x: hidden;
+		overflow-y: auto;
+	}
+
+	.content {
+		padding-top: 200px;
+	}
+
+	.find {
+		display: none;
+	}
+
+	.nav--lg {
+		font-size: 1.3em;
+		letter-spacing: 0.01em;
+
+		.nav__alphabet {
+			.alphabet {
+				&__title {
+					margin-right: 12px;
+				}
+
+				&__letter-anchor {
+					margin-right: 20px;
+				}
+
+			}
+		}
+	}
+
+	.nav {
+		&__sort-by {
+			margin-bottom: 12px;
+		}
+	}
+
+	.title {
+		transform: translateY(140px);
+	}
+
+	.about {
+		font-size: 1.25em;
+		margin: 40px 0 140px;
+		padding: 0 20px 0 50px;
+	}
+
+	.article {
+		&__heading {
+			padding-left: 50px;
+		}
+
+		&-heading {
+			&__title {
+				font-size: 1.7em;
+			}
+
+			&__name {
+				font-size: 1.25em;
+			}
+		}
+
+		&-description {
+			font-size: 1.2em;
+		}
+
+		&-detail {
+			font-size: 1em;
+		}
+
+		&__scroll-controls {
+			padding: 0 12px 0 42px;
+		}
+	}
+
+	.up-arrow {
+		font-size: 3.8em;
+	}
+
+}

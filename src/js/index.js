@@ -36,7 +36,7 @@ const renderEntries = () => {
 		makeSlider(document.getElementById(`slider-${i}`));
 	});
 
-	attachImageListeners();
+	if (window.screen.width > 768) attachImageListeners();
 	makeAlphabet(sortKey);
 };
 
