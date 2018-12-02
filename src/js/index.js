@@ -2,40 +2,31 @@ import smoothscroll from 'smoothscroll-polyfill';
 
 import { articleTemplate, renderNavLg } from './templates';
 import { debounce, hideLoading, scrollToTop } from './utils';
-import { DB } from './constants';
+import { DB, $articleList, sortIds } from './constants';
 import { attachModalListeners, attachUpArrowListeners, attachImageListeners, makeAlphabet, makeSlider } from './modules';
 
 let sortKey = 0; // 0 = artist, 1 = title
 let entries = { byAuthor: [], byTitle: [] };
 
-const addSortButtonListeners = () => {
-	let $byArtist = document.getElementById('js-by-artist');
-	let $byTitle = document.getElementById('js-by-title');
-	$byArtist.addEventListener('click', () => {
-		if (sortKey) {
+const setUpSortButtons = () => {
+	sortIds.forEach(id => {
+		const alt = id === 'artist' ? 'title' : 'artist';
+
+		const $button = document.getElementById(`js-by-${id}`);
+		const $altButton = document.getElementById(`js-by-${alt}`);
+
+		$button.addEventListener('click', () => {
 			scrollToTop();
-			sortKey = 0;
-			$byArtist.classList.add('active');
-			$byTitle.classList.remove('active');
-
+			sortKey = !sortKey;
 			renderEntries();
-		}
-	});
 
-	$byTitle.addEventListener('click', () => {
-		if (!sortKey) {
-			scrollToTop();
-			sortKey = 1;
-			$byTitle.classList.add('active');
-			$byArtist.classList.remove('active');
-
-			renderEntries();
-		}
+			$button.classList.add('active');
+			$altButton.classList.remove('active');
+		})
 	});
 };
 
 const renderEntries = () => {
-	const $articleList = document.getElementById('js-list');
 	const entriesList = sortKey ? entries.byTitle : entries.byAuthor;
 
 	$articleList.innerHTML = '';
@@ -76,9 +67,9 @@ const init = () => {
 	smoothscroll.polyfill();
 	fetchData();
 	renderNavLg();
-	addSortButtonListeners();
+	setUpSortButtons();
 	attachUpArrowListeners();
 	attachModalListeners();
-}
+};
 
 init();
