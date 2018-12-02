@@ -1,4 +1,8 @@
-const imageTemplate = (image) => `<img class="article-img" src="../../assets/images/${image}"></img>`;
+const imageTemplate = (image) => `
+<div class="article-image__outer">
+	<img class="article-image" src="../../assets/images/${image}"></img>
+</div>
+`;
 
 const articleTemplate = (entry, i) => {
 	const { title, firstName, lastName, images, description, detail } = entry;

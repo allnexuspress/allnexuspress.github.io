@@ -131,21 +131,27 @@ button {
 	}
 
 	&-view {
-		background-position: center;
-		background-repeat: no-repeat;
-		background-size: contain;
-    cursor: zoom-out;
-    margin: 0 auto;
-    width: 100%;
+    cursor: zoom-in;
+    max-height: 100%;
+    max-width: 100%;
 
     &.view-x2 {
-    	background-size: cover;
     	cursor: zoom-out;
+    	max-height: none;
+    	max-width: none;
+
+    	&--sm {
+    		cursor: zoom-out;
+    		max-height: none;
+    		width: 200%;
+    	}
 		}
 	}
 
 	&.show-img {
 		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 }
 
