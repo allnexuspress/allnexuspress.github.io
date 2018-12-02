@@ -1,14 +1,12 @@
 import smoothscroll from 'smoothscroll-polyfill';
 
-import { attachModalListeners, attachUpArrowListeners, makeAlphabet, makeSlider } from './modules';
 import { articleTemplate, renderNavLg } from './templates';
 import { debounce, hideLoading, scrollToTop } from './utils';
-import { DB, $nav, $parallax, $content, $title, $upArrow, $lightbox, $view } from './constants';
+import { DB } from './constants';
+import { attachModalListeners, attachUpArrowListeners, attachImageListeners, makeAlphabet, makeSlider } from './modules';
 
 let sortKey = 0; // 0 = artist, 1 = title
 let entries = { byAuthor: [], byTitle: [] };
-let currentLetter = 'A';
-let lightbox = false;
 
 const addSortButtonListeners = () => {
 	let $byArtist = document.getElementById('js-by-artist');
@@ -32,29 +30,6 @@ const addSortButtonListeners = () => {
 			$byArtist.classList.remove('active');
 
 			renderEntries();
-		}
-	});
-};
-
-const attachImageListeners = () => {
-	const $images = Array.from(document.querySelectorAll('.article-image'));
-
-	$images.forEach(img => {
-		img.addEventListener('click', (evt) => {
-			if (!lightbox) {
-				let src = img.src;
-				
-				$lightbox.classList.add('show-img');
-				$view.setAttribute('style', `background-image: url(${src})`);
-				lightbox = true;
-			}
-		});
-	});
-
-	$view.addEventListener('click', () => {
-		if (lightbox) {
-			$lightbox.classList.remove('show-img');
-			lightbox = false;
 		}
 	});
 };
