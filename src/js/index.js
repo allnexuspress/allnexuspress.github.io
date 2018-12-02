@@ -1,88 +1,14 @@
 import smoothscroll from 'smoothscroll-polyfill';
 
+import { attachModalListeners, attachUpArrowListeners, makeAlphabet, makeSlider } from './modules';
 import { articleTemplate, renderNavLg } from './templates';
-import { debounce, hideLoading, scrollToTop, makeSlider } from './utils';
-import makeAlphabet from './makeAlphabet';
-
-import { DB, $nav, $parallax, $content, $title, $arrow, $modal, $lightbox, $view } from './constants';
+import { debounce, hideLoading, scrollToTop } from './utils';
+import { DB, $nav, $parallax, $content, $title, $upArrow, $lightbox, $view } from './constants';
 
 let sortKey = 0; // 0 = artist, 1 = title
 let entries = { byAuthor: [], byTitle: [] };
 let currentLetter = 'A';
-let modal = false;
 let lightbox = false;
-
-const attachImageListeners = () => {
-	const $images = Array.from(document.querySelectorAll('.article-image'));
-
-	$images.forEach(img => {
-		img.addEventListener('click', (evt) => {
-			if (!lightbox) {
-				let src = img.src;
-				
-				$lightbox.classList.add('show-img');
-				$view.setAttribute('style', `background-image: url(${src})`);
-				lightbox = true;
-			}
-		});
-	});
-
-	$view.addEventListener('click', () => {
-		if (lightbox) {
-			$lightbox.classList.remove('show-img');
-			lightbox = false;
-		}
-	});
-};
-
-const attachModalListeners = () => {
-	const $find = document.getElementById('js-find');
-	
-	$find.addEventListener('click', () => {
-		$modal.classList.add('show');
-		modal = true;
-	});
-
-	$modal.addEventListener('click', () => {
-		$modal.classList.remove('show');
-		modal = false;
-	});
-
-	window.addEventListener('keydown', () => {
-		if (modal) {
-			setTimeout(() => {
-				$modal.classList.remove('show');
-				modal = false;
-			}, 600);
-		};
-	});
-}
-
-let prev;
-let current = 0;
-let isShowing = false;
-const attachArrowListeners = () => {
-	$arrow.addEventListener('click', () => {
-		scrollToTop();
-	});
-
-	$parallax.addEventListener('scroll', () => {
-
-		let y = $title.getBoundingClientRect().y;
-		if (current !== y) {
-			prev = current;
-			current = y;
-		}
-
-		if (y <= -50 && !isShowing) {
-			$arrow.classList.add('show');
-			isShowing = true;
-		} else if (y > -50 && isShowing) {
-			$arrow.classList.remove('show');
-			isShowing = false;
-		}
-	});
-};
 
 const addSortButtonListeners = () => {
 	let $byArtist = document.getElementById('js-by-artist');
@@ -106,6 +32,29 @@ const addSortButtonListeners = () => {
 			$byArtist.classList.remove('active');
 
 			renderEntries();
+		}
+	});
+};
+
+const attachImageListeners = () => {
+	const $images = Array.from(document.querySelectorAll('.article-image'));
+
+	$images.forEach(img => {
+		img.addEventListener('click', (evt) => {
+			if (!lightbox) {
+				let src = img.src;
+				
+				$lightbox.classList.add('show-img');
+				$view.setAttribute('style', `background-image: url(${src})`);
+				lightbox = true;
+			}
+		});
+	});
+
+	$view.addEventListener('click', () => {
+		if (lightbox) {
+			$lightbox.classList.remove('show-img');
+			lightbox = false;
 		}
 	});
 };
@@ -151,10 +100,9 @@ const fetchData = () => {
 const init = () => {
 	smoothscroll.polyfill();
 	fetchData();
-
 	renderNavLg();
 	addSortButtonListeners();
-	attachArrowListeners();
+	attachUpArrowListeners();
 	attachModalListeners();
 }
 
