@@ -350,7 +350,8 @@ button {
 		font-size: 0.9em;
 		font-weight: 300;
 		letter-spacing: 0.02em;
-		margin: 0 0 10px 0;
+		line-height: 1.2em;
+		margin: 0 0 20px 0;
 		min-width: 400px;
 
 		&__outer {
@@ -361,7 +362,18 @@ button {
 	}
 
 	&-detail {
-		font-size: 0.85em;
+		font-size: 0.9em;
+		letter-spacing: 0.02em;
+
+		&--margin {
+			margin-bottom: 10px;
+		}
+
+		&--link {
+			&:hover {
+				text-decoration: none;
+			}
+		}
 	}
 }
 
@@ -396,6 +408,20 @@ button {
 		order: 1;
 		position: relative;
 	}
+}
+
+.credits {
+	position: absolute;
+  left: 20px;
+  bottom: 8px;
+  font-size: 0.8em;
+  font-weight: 300;
+
+  a {
+  	&:hover {
+  		text-decoration: none;
+  	}
+  }
 }
 
 .up-arrow {

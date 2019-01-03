@@ -5,7 +5,7 @@ const imageTemplate = (image) => `
 `;
 
 const articleTemplate = (entry, i) => {
-	const { title, firstName, lastName, images, description, detail } = entry;
+	const { title, firstName, lastName, images, description, contents, dimensions, year, isbn, link } = entry;
 
 	const imageHTML = images.length ? 
 		images.map(image => imageTemplate(image)).join('') : '';
@@ -27,7 +27,10 @@ const articleTemplate = (entry, i) => {
 						${imageHTML}
 						<div class="article-description__outer">
 							<div class="article-description">${description}</div>
-							<div class="article-detail">${detail}</div>
+							<div class="article-detail">${contents}</div>
+							<div class="article-detail article-detail--margin">${dimensions}</div>
+							<div class="article-detail article-detail--margin">${year}</div>
+							<a class="article-detail article-detail--link" target="_blank" href="${link}">${isbn}</a>
 						</div>
 					</div>
 					<div class="article__scroll-controls">
