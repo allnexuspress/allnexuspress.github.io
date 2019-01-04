@@ -88,7 +88,7 @@
 
 		&-description {
 			font-size: 2.6em;
-			margin-bottom: 30px;
+			margin-bottom: 40px;
 			min-width: 550px;
 
 			&__outer {
@@ -98,7 +98,11 @@
 		}
 
 		&-detail {
-			font-size: 1.8em;
+			font-size: 2.5em;
+
+			&--margin {
+				margin-bottom: 40px;
+			}
 		}
 
 		&__slider-inner {
