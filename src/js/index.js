@@ -1,4 +1,5 @@
 import smoothscroll from 'smoothscroll-polyfill';
+import 'whatwg-fetch'; 
 
 import { articleTemplate, renderNavLg } from './templates';
 import { debounce, hideLoading, scrollToTop } from './utils';
@@ -26,6 +27,14 @@ const setUpSortButtons = () => {
 	});
 };
 
+const makeCitation = (entry, i) => {
+	const { credit, credit_link } = entry;
+	const entryDescription = document.getElementById(`slider-${i}`).querySelector('.article-description');
+	const citation = `<div class="article-credit">source: <a href="${credit_link}">${credit}</a></div>`;
+	
+	entryDescription.insertAdjacentHTML('beforeend', citation);
+};
+
 const renderEntries = () => {
 	const entriesList = sortKey ? entries.byTitle : entries.byAuthor;
 
@@ -34,6 +43,10 @@ const renderEntries = () => {
 	entriesList.forEach((entry, i) => {
 		$articleList.insertAdjacentHTML('beforeend', articleTemplate(entry, i));
 		makeSlider(document.getElementById(`slider-${i}`));
+
+		if (entry.credit) {
+			makeCitation(entry, i);
+		}
 	});
 
 	if (window.screen.width > 768) attachImageListeners();

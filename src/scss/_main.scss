@@ -375,6 +375,17 @@ button {
 			}
 		}
 	}
+
+	&-credit {
+		font-size: 12px;
+		margin-top: 10px;
+
+		a {
+			&:hover {
+				text-decoration: none;
+			}
+		}
+	}
 }
 
 .article__slider-inner::-webkit-scrollbar {
@@ -410,7 +421,9 @@ button {
 	}
 }
 
-.credits {
+.credits-sources {
+	display: flex;
+	flex-direction: column;
 	position: absolute;
   left: 20px;
   bottom: 8px;
@@ -421,6 +434,25 @@ button {
   	&:hover {
   		text-decoration: none;
   	}
+  }
+}
+
+.sources {
+	margin-bottom: 10px;
+}
+
+.credits {
+	padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+
+  span {
+  	margin-right:3px;
+  }
+
+  li {
+  	margin-right: 4px;
   }
 }
 

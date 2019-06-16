@@ -10,7 +10,7 @@ const articleTemplate = (entry, i) => {
 	const imageHTML = images.length ? 
 		images.map(image => imageTemplate(image)).join('') : '';
 
-	return  `
+	return `
 		<article class="article__outer">
 			<div class="article__inner">
 				<div class="article__heading">
@@ -41,7 +41,7 @@ const articleTemplate = (entry, i) => {
 					<p class="js-article-anchor-target"></p>
 			</div>
 		</article>
-	`
+	`;
 };
 
 export default articleTemplate;
