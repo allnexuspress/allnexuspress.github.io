@@ -1,17 +1,23 @@
+@keyframes fadeIn {
+	0% { opacity: 0; }
+	100% { opacity: 1 }
+}
+
 body {
 	font-family: $font-stack; 
 }
 
-p {
-	letter-spacing: 0.004em;
-}
-
 a {
 	color: black;
+	text-decoration: underline;
+
+	&:hover {
+		text-decoration: none;
+	}
 }
 
 h1 {
-	font-size: 3em;
+	font-size: 2.6em;
 	letter-spacing: 0.02em;
 	margin: 0;
 }
@@ -36,12 +42,17 @@ button {
 	}
 }
 
+sup {
+	padding-right: 2px;
+	vertical-align: super;
+}
+
 .loading {
 	opacity: 0;
 
 	&.ready {
 		opacity: 1;
-		transition: opacity 0.5s ease-out;
+		transition: opacity 1s ease-out;
 	}
 }
 
@@ -193,7 +204,7 @@ button {
 
 .nav {
 	&--lg {
-		font-size: 1.1em;
+		font-size: 1em;
 		min-width: 620px;
 		opacity: 0.9em;
 		order: 1;
@@ -292,7 +303,13 @@ button {
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 200px;
+	opacity: 0;
 	position: relative;
+
+	&.ready {
+		opacity: 1;
+		transition: opacity 2s 1s ease-out;
+	}
 }
 
 .controls {
@@ -310,7 +327,7 @@ button {
 	}
 
 	&__outer {
-		padding: 0 0 100px 0;
+		padding: 0 0 80px 0;
 	}
 
 	&__heading {
@@ -321,15 +338,16 @@ button {
 
 	&-heading {
 		&__title {
-			font-size: 1.3em;
+			font-size: 1.1em;
 			hyphens: auto;
 			letter-spacing: 0.02em;
 			margin: 0 10px 20px 0;
 		}
 
 		&__name {
+			font-size: 0.9em;
 			font-weight: 300;
-			letter-spacing: 0.01em;
+			letter-spacing: 0.02em;
 		}
 	}
 
@@ -347,9 +365,7 @@ button {
 	}
 
 	&-description {
-		font-size: 0.95em;
 		font-weight: 300;
-		letter-spacing: 0.02em;
 		line-height: 1.2em;
 		margin: 0 0 20px 0;
 		min-width: 400px;
@@ -357,14 +373,13 @@ button {
 		&__outer {
 			display: flex;
 			flex-direction: column;
+			font-size: 0.9em;
+			letter-spacing: 0.02em;
 			padding-right: 30px;
 		}
 	}
 
 	&-detail {
-		font-size: 0.9em;
-		letter-spacing: 0.02em;
-
 		&--margin {
 			margin-bottom: 10px;
 		}
@@ -393,10 +408,19 @@ button {
 }
 
 .about {
+	font-size: 0.9em;
 	font-weight: 300;
+	hyphens: auto;
 	letter-spacing: 0.02em;
-	margin-bottom: 100px;
+	line-height: 1.25em;
+	margin: -10px auto 70px;
+	max-width: 950px;
 	padding: 0 70px 0 100px;
+
+	.credits-link {
+		cursor: pointer;
+		font-size: 0.85em;
+	}
 }
 
 .header {
@@ -422,30 +446,29 @@ button {
 }
 
 .credits-sources {
-	display: flex;
-	flex-direction: column;
+	bottom: 40px;
+	font-size: 0.8em;
+	font-weight: 300;
+	left: 20px;
+	line-height: 1.3em;
 	position: absolute;
-  left: 20px;
-  bottom: 8px;
-  font-size: 0.8em;
-  font-weight: 300;
+}
 
-  a {
+.sources {
+	ul {
+		line-height: 1.5em;
+		list-style: none;
+		margin-bottom: 80px;
+		padding: 0;
+	}
+}
+
+.credits {
+	a {
   	&:hover {
   		text-decoration: none;
   	}
   }
-}
-
-.sources {
-	margin-bottom: 10px;
-}
-
-.credits {
-	padding: 0;
-  margin: 0;
-  list-style: none;
-  display: flex;
 
   span {
   	margin-right:3px;

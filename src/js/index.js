@@ -50,6 +50,9 @@ const renderEntries = () => {
 	});
 
 	if (window.screen.width > 768) attachImageListeners();
+
+	$articleList.classList.add('ready');
+
 	makeAlphabet(sortKey);
 };
 
